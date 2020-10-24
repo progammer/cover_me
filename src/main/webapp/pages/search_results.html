@@ -7,6 +7,7 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
+    <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="./search_results.css" />
   </head>
   <body>
@@ -17,10 +18,12 @@
         <i class="fas fa-search" aria-hidden="true"></i>
         </form>
     </div>
-    <div class="row">
-        <div id="postings" class="column">
+    <div class="main-row">
+        <div id="postings" class="main-column">
+            <h3 id="search-disp">
+            </h3>
         </div>
-        <div id="map" class="column"></div>
+        <div id="map" class="main-column"></div>
     </div>
   </body>
   <script src="./search_results.js"></script>
