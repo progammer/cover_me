@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@SuppressWarnings("serial")
 @WebServlet("/test")
 public class Servlet extends HttpServlet {
 
@@ -22,8 +23,8 @@ public class Servlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    Object o = request.getParameter("param");
+    String s = request.getParameter("param");
     response.setContentType("html/text");
-    response.getWriter().println("this is the output from the servlet");
+    response.getWriter().println("this is the output from the servlet: " + s);
   }
 }

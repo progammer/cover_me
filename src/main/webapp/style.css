@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-body {
+html, body {
     font-family: 'Quicksand', sans-serif;
-    color: white;
-    background-color:#faa7bc;
+    color: #434343;
+    background-color:#d9ead3ff;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-#top {
-    text-align:center;
-    font-size:80px;
+input {
+    font-family: 'Quicksand', sans-serif;
+    color: #999999;
 }
+textarea:focus, input:focus{
+    outline: none;
+}
+
