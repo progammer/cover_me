@@ -39,7 +39,7 @@ function initMy() {
 
     displayMap(location);
 
-    addPostingsFromSearch();
+    displayMyPostings();
 }
 
 function displayMap(location) {
@@ -123,7 +123,6 @@ function displayMyPostings() {
 }
 
 function addPostingsFromSearch() {
-    
     var postings = document.getElementById("postings");
 
     for (posting of fetch_json) {
