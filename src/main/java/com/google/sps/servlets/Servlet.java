@@ -11,6 +11,7 @@ public class Servlet extends HttpServlet {
 
   // which method you call depends on fetch method (ex. method = GET  or method = POST in the
   // javascript code)
+  // default method is get
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
