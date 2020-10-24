@@ -1,0 +1,130 @@
+h1 {
+    font-family: 'Nunito';
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+h3 {
+    font-family: 'Nunito';
+    font-size: 18px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+p {
+    font-family: 'Nunito';
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+blockquote {
+    font-family: 'Nunito';
+    font-size: 21px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+#search-bar {
+    background-color: #93c47d;
+    height:15%;
+    width: 100%;
+}
+
+#postings {
+    overflow-y: scroll;
+    width: 55%;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+#map {
+  width: 45%;
+}
+
+.main-column {
+  float: left;
+  height: 100%;
+}
+
+.main-row {
+    background-color: #d9ead3;
+    height: 85%;
+}
+
+/* Clear floats after the columns */
+.main-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#search-disp {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 100px;
+    margin-right: 80px;
+    height: 16px;
+}
+
+.posting {
+    background-color: #FFFFFF;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 30px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+.posting:last-child {
+    margin-bottom: 60px;
+}
+
+.posting:hover {
+    background-color: #EFEFEF;
+    cursor: pointer;
+}
+
+.post-column {
+    float: left;
+    height: 100%;
+}
+
+.post-row {
+    width: 100%;
+    height: 100%;
+}
+
+/* Clear floats after the columns */
+.post-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
