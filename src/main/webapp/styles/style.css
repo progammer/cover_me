@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+html, body {
+    font-family: 'Nunito', sans-serif;
+    color: #434343;
+    background-color:#d9ead3ff;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    font-family: 'Nunito', sans-serif;
+    color: #434343;
+}
+
+::placeholder, ::-ms-input-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+

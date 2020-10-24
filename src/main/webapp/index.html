@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>cover me</title>
     <link rel="stylesheet" href="landing.css">
-    <link id="style" rel="stylesheet" href="style.css">
+    <link id="style" rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="dependencies/bootstrap.min.css">
     <link rel="stylesheet" href="dependencies/mdb.min.css">
@@ -12,7 +12,7 @@
     <script type="text/javascript" src="dependencies/popper.min.js"></script>
     <script type="text/javascript" src="dependencies/bootstrap.min.js"></script>
     <script type="text/javascript" src="dependencies/mdb.min.js"></script>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
   </head>
   <body>
     <div id="top">cover me &#10084;</div> 
@@ -26,6 +26,7 @@
     </form>
 
     <a href="my.html">go to my.html</a>
+    <a href="search_results.html">go to search_results.html</a>
     <button id="submit" input=button>Go to results page</button> 
 
   </body>
@@ -35,7 +36,7 @@
 
 document.getElementById("submit")
         .addEventListener("click", function(event) {
-    window.location.replace("./pages/search_results.html?q=hack+man&location=Austin+Texas&r=default");
+    window.location.replace("./search_results.html?q=hack+man&location=Austin+Texas&r=default");
 });
 
 </script>
