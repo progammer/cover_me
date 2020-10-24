@@ -2,6 +2,7 @@ let api_key = "AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ";
 
 let map;
 let s_keywords, s_location, s_radius;
+let s_latlng;
 
 function initSearch() {
     //First get search attributes
@@ -45,6 +46,7 @@ function initMy() {
 function displayMap(location) {
     var loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + api_key));
     var geo_loc = loc_json.results[0].geometry.location;
+    s_latlng = geo_loc;
 
     map = new google.maps.Map(document.getElementById("map"), {
         center: geo_loc,
@@ -53,6 +55,7 @@ function displayMap(location) {
             mapTypeIds: ["roadmap", "satellite"]
         },
     });
+
 }
 
 //GET PARAMS WITH FETCH, temp json:
@@ -123,11 +126,20 @@ function displayMyPostings() {
 
 function addPostingsFromSearch() {
     var postings = document.getElementById("postings");
+    var count = 1;
+    for (posting of fetch_json) {
+        // posting.distance = get_distance(s_latlng, posting.location);
+        posting.distance = count;
+        count ++;
+    }
+
+    // sort in order of distance
+    fetch_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
     for (posting of fetch_json) {
         console.log(posting);
 
-        createPosting(posting, postings, display_search)
+        createPosting(posting, postings, display_search);
 
         //draw onto the map
         let marker = new google.maps.Marker({
@@ -175,8 +187,10 @@ function createPosting(posting, postingsList, option) {
     
     if(option == display_search) {
         // display distance and then price
-        post_dist.innerText = '5 miles away';
-        // post_dist.innerText = get_distance(curr_loc, posting.location);
+        if (posting.distance)
+            post_dist.innerText = posting.distance + ' miles away';
+        else
+            post_dist.innerText = 'Remote job';
         post_price.innerText = price;
     } else if (option == display_mine) {
         post_dist.innerText = price;
@@ -193,7 +207,12 @@ function createPosting(posting, postingsList, option) {
 }
 
 function get_distance(loc1, loc2) {
-
+    let lat1 = loc1.lat;
+    let lng1 = loc1.lng;
+    let lat2 = loc2.lat;
+    let lng2 = loc2.lng;
+    
+    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow (lng1 - lng2, 2));
 }
 
 function markerClick() {

@@ -1,0 +1,60 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>cover me</title>
+        <link id="style" rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/header.css">
+        <link rel="stylesheet" href="styles/job_post.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <!-- header -->
+        <div id="header">
+            <div id="logo"><div>coverme♥️</div></div>
+            <div id="search-bar">
+                <input type="text" class="search-bar left" placeholder="find a job to cover...">
+                <input type="text" class="search-bar right" placeholder="Location">
+                <img class="search-button" src="images/search.png"/>
+            </div>
+        </div>
+
+        <div class="main-row">
+            <div id="add-form-title">
+                <p>Looking for some help?</p>
+                <p>Post a job!</p>
+            </div>
+            <form id="add-job-form" class="main-column job-post" action="/add-posting">
+                <input type="text" id="job-name" name="title" placeholder="Job title" required>
+                <textarea name="job-desc" id="job-desc" rows="6" wrap="soft" 
+                    placeholder="Please describe the job you are looking for, as well as any requirements necessary to take on the job."></textarea>
+                <label id="category-label" for="category">Job Category</label>
+                <select id="category" name="category">
+                    <option value="default">Choose a category</option>
+                    <option value="labor">Physical Labor</option>
+                    <option value="education">Education</option>
+                    <option value="household">Household</option>
+                    <option value="music">Art/Music</option>
+                    <option value="programming">Programming</option>
+                    <option value="other">Other</option>
+                </select><br>
+                <div class="form-section">
+                    <label id="budget-label" for="budget">Maximum Budget</label>
+                    <input type="text" id="budget" name="budget" placeholder="How much are you willing to pay?"><br>
+                </div>
+                <div class="form-section">
+                    <label id="contact-label" for="contact">Contact Info</label><br>
+                    <label for="phone">Phone #:</label>
+                    <input type="text" id="phone" name="phone" placeholder="Enter a valid phone number..."><br>
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" placeholder="Enter a valid email address..."><br>
+                </div>
+                <div class="form-section">
+                    <label id="address-label" for="address">Job Location</label>
+                    <input type="text" id="address" name="address" placeholder="Enter an address or zip code"><br>
+                </div>
+                <input id="form-done" type="submit"></input>
+            </form>
+        </div>
+    </body>
+</html>

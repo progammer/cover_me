@@ -9,7 +9,7 @@ html, body {
     padding: 0;
 }
 
-input, textarea, button {
+input, textarea, button, select, select option {
     font-family: 'Nunito', sans-serif;
     color: #434343;
     border: transparent;

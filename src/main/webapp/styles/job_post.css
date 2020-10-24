@@ -1,0 +1,82 @@
+.main-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#add-form-title {
+    text-align: center;
+    font-size: 3em;
+    width: 40%;
+}
+
+.job-post {
+    height: calc(100% - 125px);
+    width: 40%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 50px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    font-size: 1.1em;
+}
+
+.job-post input, .job-post textarea, .job-post select, .job-post select option {
+    font-size: 1.1em;
+}
+
+#job-name, #job-desc {
+    display: block;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+#job-name {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+#contact-div {
+    display: table;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-right: 20px;
+}
+
+#category {
+    display: inline-block;
+    width: 100%;
+}
+
+#budget-label {
+    color: #93c47dff;
+}
+
+#phone, #email, #address, #budget {
+    width: 65%;
+}
+
+.form-section {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#form-done {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #93c47dff;
+    display: table-cell;
+    height: 75px;
+    width: 35%;
+    align-self: center;
+    margin: 10px;
+}
