@@ -7,7 +7,7 @@ function serverExample() {
 
       const params = new URLSearchParams();
       params.append('param', 'test'); // can add parameters to html request
-      fetch(new Request('/test', {method: 'POST', body: params}))
+      fetch(new Request('/test', {method: 'POST', body: params})).then((response) => response.text())
           .then(function(responseText) {
         // do something with text output of html response
       });
