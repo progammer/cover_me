@@ -53,15 +53,6 @@ blockquote {
   width: 45%;
 }
 
-.main-column {
-  float: left;
-  height: 100%;
-}
-
-.main-row {
-    height: 85%;
-}
-
 /* Clear floats after the columns */
 .main-row:after {
   content: "";
