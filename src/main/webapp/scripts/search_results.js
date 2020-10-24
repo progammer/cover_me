@@ -90,7 +90,6 @@ let fetch_json =
                 "title": "Help Me Hack! 5",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.2825125, "lng": -97.75125152},
-                "price": [10, 20],
                 "author": "Ethan Lao"
             },
         ];
