@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/servlet")
+@WebServlet("/test")
 public class Servlet extends HttpServlet {
 
   // which method you call depends on fetch method (ex. method = GET  or method = POST in the
