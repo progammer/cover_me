@@ -1,0 +1,38 @@
+#search-bar {
+    height:10%;
+    width: 100%;
+}
+
+
+#postings {
+    width: 55%;
+}
+
+#map {
+  width: 45%;
+}
+
+.column {
+  float: left;
+  height: 100%;
+}
+
+.row {
+    height: 90%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}

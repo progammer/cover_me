@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <link rel="stylesheet" type="text/css" href="./search_results.css" />
+  </head>
+  <body>
+    <div id="search-bar">
+        <!-- Search form -->
+        <form id="search" style="font-family: 'Quicksand'" class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="need something covered?">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        </form>
+    </div>
+    <div class="row">
+        <div id="postings" class="column">
+        </div>
+        <div id="map" class="column"></div>
+    </div>
+  </body>
+  <script src="./search_results.js"></script>
+</html>
