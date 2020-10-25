@@ -5,20 +5,53 @@ function checkLogin(doAfter) {
         let login_field = document.getElementById('user-info');
         login_field.textContent = "";
         let link = document.createElement('a');
-        link.href = result.url;
+        login_field.appendChild(link);
 
         if(result.action == 'login') {
             // url is a login url
             link.innerText = 'Login';
+            link.href = result.url;
+
         } else {
             // url is a logout url
             let email = result.email;
-            link.innerText = 'Logout'
-            let welcome = document.createElement('span');
-            welcome.innerText = 'Hello, ' + result.email + '! ';
-            login_field.appendChild(welcome);
+            link.innerText = 'Hello, ' + email + '! ';
+            login_field.style.cursor = 'pointer';
+
+            let dropdown = document.createElement('div');
+            dropdown.id = 'dropdown';
+            login_field.appendChild(dropdown);
+
+            let child1 = document.createElement('a');
+            child1.classList.add('dropdown-item');
+            child1.href = '/posting.html';
+            child1.innerText = 'Post a job';
+
+            let child2 = document.createElement('a');
+            child2.classList.add('dropdown-item');
+            child2.href = '/my.html';
+            child2.innerText = 'My Job Postings';
+
+            let child3 = document.createElement('a');
+            child3.classList.add('dropdown-item');
+            child3.href = result.url;
+            child3.innerText = 'Logout';
+
+            dropdown.appendChild(child1);
+            dropdown.appendChild(child2);
+            dropdown.appendChild(child3);
+
+
+            login_field.onclick = function() {
+                console.log('click');
+                if (document.getElementById('dropdown').classList.contains('clicked')) {
+                    document.getElementById('dropdown').classList.remove('clicked');
+                } else {
+                    document.getElementById('dropdown').classList.add('clicked');
+                }
+            };
         }
-        login_field.appendChild(link);
+        
     });
     if(doAfter) {
         doAfter();

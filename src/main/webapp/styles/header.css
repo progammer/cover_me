@@ -30,6 +30,30 @@
     left: calc(50% - 350px);
 }
 
+#dropdown {
+    position: absolute;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.274);
+    right: 10px;
+    width: 175px;
+    top: 50px;
+    display: none;
+    flex-flow: column nowrap;
+    height: 125px;
+    overflow: hidden;
+    justify-content: space-around;
+    z-index: 3;
+}
+
+#dropdown.clicked {
+    display: flex;
+}
+
+.dropdown-item {
+    width: 80%;
+    padding-left: 10%;
+}
+
 .search-bar {
     margin: 0;
     border-color: transparent;
@@ -63,4 +87,9 @@
     right: 0%;
     padding-right: 50px;
     top: calc(50% - 0.55em);
+}
+
+#user-info a {
+    display: block;
+    text-decoration: none;
 }
