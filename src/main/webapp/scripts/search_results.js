@@ -15,7 +15,7 @@ function initSearch() {
 
     let search_header = document.createElement('h3');
     search_header.id = 'search-disp';
-    search_header.innerHTML = "Search results near " + s_location.split("+").join(" ");
+    search_header.innerHTML = "Search results near " + s_location.split("+").join(" ").split("%20").join(" ");
     postings.appendChild(search_header);
 
     if (displayMap(s_location) == null) {
@@ -37,7 +37,6 @@ function initMy() {
 
     displayMap(location);
     getMyPosts();
-
 }
 
 function getMyPosts() {
@@ -265,6 +264,7 @@ function addMarker(location, title, pay, is_single) {
             fontSize: '14px',
             text: "$" + parseInt(pay)
         },
+        zIndex: 1,
         cursor: mouse_shape
     });
 
@@ -314,6 +314,8 @@ function mouseover_post() {
     let new_label = marker.getLabel();
     new_label.color = "white";
     marker.setLabel(new_label);
+
+    marker.setZIndex(marker.getZIndex() + 1);
 }
 
 function mouseout_post() {
@@ -325,6 +327,8 @@ function mouseout_post() {
     let new_label = marker.getLabel();
     new_label.color = "black";
     marker.setLabel(new_label);
+
+    marker.setZIndex(marker.getZIndex() - 1);
 }
 
 function click_post() {
@@ -340,6 +344,8 @@ function mouseover_marker() {
     let new_label = marker.getLabel();
     new_label.color = "white";
     marker.setLabel(new_label);
+
+    marker.setZIndex(marker.getZIndex() + 1);
 }
 
 function mouseout_marker() {
@@ -351,6 +357,8 @@ function mouseout_marker() {
     let new_label = marker.getLabel();
     new_label.color = "black";
     marker.setLabel(new_label);
+
+    marker.setZIndex(marker.getZIndex() - 1);
 }
 
 function Get(yourUrl){

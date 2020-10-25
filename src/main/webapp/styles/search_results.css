@@ -113,6 +113,10 @@ blockquote {
     text-align: center;
 }
 
+.posting-price:hover {
+    background-color: #90b87b;
+}
+
 .posting-price.remove {
     cursor: hover;
 }
