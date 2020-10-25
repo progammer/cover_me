@@ -197,12 +197,16 @@ function createPosting(posting, postingsList, option, corr_mark) {
         else
             post_dist.innerText = 'Remote job';
         post_price.innerText = price;
+        post_price.onclick = function() {
+            window.location.href = '/show?id=' + posting.id;
+        };
         
     } else if (option == display_mine) {
         post_dist.innerText = price;
         post_price.innerText = 'Remove Listing';
         post_price.onclick = function() {
             // remove listing
+            fetch('/delete?id=' + posting.id).then(window.location.href = 'my.html');
         };
     }
 
@@ -212,8 +216,10 @@ function createPosting(posting, postingsList, option, corr_mark) {
     post_div.appendChild(post_dist);
     post_div.appendChild(post_price);
 
-    post_div.onclick = function() {
-        // fetch('/show?id=' + posting.id);
+    post_dist.onclick = function() {
+        window.location.href = '/show?id=' + posting.id;
+    };
+    post_details.onclick = function() {
         window.location.href = '/show?id=' + posting.id;
     };
     postingsList.appendChild(post_div);

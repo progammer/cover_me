@@ -26,6 +26,7 @@ public class ShowServlet extends HttpServlet {
     KeyFactory keyFactory = datastore.newKeyFactory().setKind("Post");
     Key postKey = keyFactory.newKey(id);
     Entity posting = datastore.get(postKey);
+    if (posting == null) return;
 
     /* TODO: handle entity not found */
 
@@ -48,43 +49,5 @@ public class ShowServlet extends HttpServlet {
 
     String redirectURL = "/jsp/view_job.jsp";
     request.getRequestDispatcher(redirectURL).forward(request, response);
-
-    // TODO: make an error not found page
-
-    /* Entity retrieved = datastore.get(job_posting_key);
-    System.out.println("-------------------");
-    System.out.println(retrieved.getString("user_id"));
-    System.out.println(retrieved.getString("title"));
-    System.out.println(retrieved.getString("description"));
-    System.out.println(retrieved.getString("address"));
-    System.out.println(retrieved.getDouble("lat"));
-    System.out.println(retrieved.getDouble("pay"));
-    System.out.println(job_posting_key);
-    System.out.println("-------------------");
-
-    long id = job_posting_key.getId();
-    Key test = keyFactory.newKey(id);
-    System.out.println(datastore.get(test)); */
-
-    /* Query<Entity> query =
-        Query.newEntityQueryBuilder()
-            .setKind("Post")
-            .setFilter(
-                PropertyFilter.hasAncestor(
-                    datastore.newKeyFactory().setKind("User").newKey(user_id)))
-            .build();
-    QueryResults<Entity> user_posts = datastore.run(query);
-
-    while (user_posts.hasNext()) {
-      Entity temp_post = user_posts.next();
-      System.out.println("-------------------");
-      System.out.println(temp_post.getString("user_id"));
-      System.out.println(temp_post.getString("title"));
-      System.out.println(temp_post.getString("description"));
-      System.out.println(temp_post.getString("address"));
-      System.out.println(temp_post.getString("lat"));
-      System.out.println(temp_post.getString("lng"));
-      System.out.println(temp_post.getString("pay"));
-    } */
   }
 }
