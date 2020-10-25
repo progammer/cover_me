@@ -64,6 +64,11 @@ function initView() {
 
 function displayMap(location) {
     var loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + api_key));
+    
+    if (log_json.results[0] == undefined) {
+        return null;
+    }
+    
     var geo_loc = loc_json.results[0].geometry.location;
     s_latlng = geo_loc;
     map = new google.maps.Map(document.getElementById("map"), {

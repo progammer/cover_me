@@ -22,7 +22,7 @@
         <div id="search-bar">
             <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
             <input type="text" class="search-bar right" id="location" placeholder="Location">
-            <img onclick="submit()" class="search-button" src="images/search.png"/>
+            <img onclick="submit_search()" class="search-button" src="images/search.png"/>
         </div>
         <div id="user-info">
             <div>Loading...</div>
@@ -38,7 +38,7 @@
 
 </body>
 
-<script>document.getElementById('search-bar').onkeypress = function(e){
+<script>/* document.getElementById('search-bar').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
     if (keyCode == '13'){
@@ -46,7 +46,7 @@
     }
 }
 
-function submit() {
+function submit() { */
     /* const params = new URLSearchParams();
     params.append('keywords', document.getElementById('job_type').value);
     let location = encodeURIComponent(document.getElementById('location').value);
@@ -61,10 +61,10 @@ function submit() {
             displayMyPostings(responseJson);
     }); */
 
-    window.location.href = "search_results.html?q=" + document.getElementById('job_type').value
+    /* window.location.href = "search_results.html?q=" + document.getElementById('job_type').value
         + "&location=" + document.getElementById('location').value;
-}
+} */
 </script>
-
+<script src="scripts/header_search.js"></script>
 
 </html>

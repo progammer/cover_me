@@ -19,9 +19,9 @@
         <div id="header">
             <div id="logo" onclick="window.location.href='index.html';"><div>coverme♥️</div></div>
             <div id="search-bar">
-                <input type="text" class="search-bar left" placeholder="find a job to cover...">
-                <input type="text" class="search-bar right" placeholder="Location">
-                <img class="search-button" src="images/search.png"/>
+                <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
+                <input type="text" class="search-bar right" id="location" placeholder="Location">
+                <img onclick="submit_search()" class="search-button" src="images/search.png"/>
             </div>
             <div id="user-info">
                 <div>Loading...</div>
@@ -63,9 +63,10 @@
 
         </div>
     </body>
+    <script src="scripts/header_search.js"></script>
 </html>
 <script>
-    //script to populate fields
+    //script to populate fields?
 
 
 </script>
