@@ -57,13 +57,11 @@ function getMyPosts() {
 function initView() {
     let location = document.getElementById('job-address').innerText;
     let title = document.getElementById('job-name').innerText;
-    let pay = document.getElementById('pay').innerText.substring('$');
-    let geo_loc = displayMap(location.split(' ').join('+'));
 
-    addMarker(geo_loc, title, pay);
-    
-    if(pay.indexOf('$') < 0)
-        document.getElementById('pay').innerText = '$' + pay;
+    let budget = document.getElementById('budget-value').innerText.replace("\$", "");
+
+    let geo_loc = displayMap(location.split(' ').join('+'));
+    addMarker(geo_loc, title, budget);
 
 }
 
