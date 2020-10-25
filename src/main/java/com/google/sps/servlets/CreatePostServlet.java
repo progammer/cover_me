@@ -78,15 +78,10 @@ public class CreatePostServlet extends HttpServlet {
     QueryResults<Entity> user_posts = datastore.run(query);
 
     while (user_posts.hasNext()) {
-      Entity temp_post = user_posts.next();
-      System.out.println("-------------------");
-      System.out.println(temp_post.getString("user_id"));
-      System.out.println(temp_post.getString("title"));
-      System.out.println(temp_post.getString("description"));
-      System.out.println(temp_post.getString("address"));
-      System.out.println(temp_post.getString("lat"));
-      System.out.println(temp_post.getString("lng"));
-      System.out.println(temp_post.getString("pay"));
+        Entity temp_post = user_posts.next();
+        System.out.println("-------------------");
+        System.out.println(temp_post.getString("user_id"));
+        System.out.println(temp_post.getString("title"));
     } */
 
     response.setContentType("html/text");
