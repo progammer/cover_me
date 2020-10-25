@@ -22,19 +22,17 @@ public class SearchServlet extends HttpServlet {
   private class Post implements Comparable<Post> {
     private String title;
     private String description;
-    private double lat;
-    private double lng;
-    private double price;
+    private Location location;
+    private double pay;
     private double distance;
 
     public Post(
         String title, String description, double lat, double lng, double price, double distance) {
       this.title = title;
       this.description = description;
-      this.lat = lat;
-      this.lng = lng;
-      this.price = price;
-      this.distance = distance;
+      this.location = new Location(lat, lng);
+      this.pay = price;
+      this.distance = Math.round(distance);
     }
 
     public int compareTo(Post other) {
@@ -43,6 +41,16 @@ public class SearchServlet extends HttpServlet {
 
     public String toString() {
       return title + " " + description + " " + lat + " " + lng + " " + price + " " + distance;
+    }
+  }
+
+  private static class Location {
+    double lat;
+    double lng;
+
+    public Location(double lat, double lng) {
+      this.lat = lat;
+      this.lng = lng;
     }
   }
 
@@ -75,7 +83,8 @@ public class SearchServlet extends HttpServlet {
     final double OFFSET = 0.5;
     double lngUpper = lng + OFFSET;
     double lngLower = lng - OFFSET;
-
+    double latLower = lat - OFFSET;
+    double latUpper = lat + OFFSET;
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
     // Query<Entity> all = Query.newEntityQueryBuilder().setKind("Post").build();
@@ -90,13 +99,16 @@ public class SearchServlet extends HttpServlet {
             .setFilter(
                 CompositeFilter.and(
                     PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower)))
+            .setFilter(
+                CompositeFilter.and(
+                    PropertyFilter.le("lat", latUpper), PropertyFilter.ge("lat", latLower)))
             .build();
 
     QueryResults<Entity> user_posts = datastore.run(query);
 
     ArrayList<Post> postsIncreasingDistance = new ArrayList<>();
     while (user_posts.hasNext()) {
-    //   System.out.println("in");
+      //   System.out.println("in");
       Entity temp_post = user_posts.next();
       double otherLat;
       try {

@@ -48,7 +48,7 @@ public class GetMyPostServlet extends HttpServlet {
 
       String title = temp_post.getString("title");
       String description = temp_post.getString("description");
-      String lat = temp_post.getString("lat");
+      double lat = temp_post.getDouble("lat");
       double lng = temp_post.getDouble("lng");
       String price = temp_post.getString("pay");
       MyPost newPost = new MyPost(title, description, lat, lng, price, temp_post.getKey().getId());
@@ -67,7 +67,7 @@ public class GetMyPostServlet extends HttpServlet {
     String pay;
     long id;
 
-    public MyPost(String title, String description, String lat, double lng, String price, long id) {
+    public MyPost(String title, String description, double lat, double lng, String price, long id) {
       this.title = title;
       this.description = description;
       location = new Location(lat, lng);
@@ -80,9 +80,10 @@ public class GetMyPostServlet extends HttpServlet {
     double lat;
     double lng;
 
-    public Location(String lat, double lng) {
-      this.lat = Double.parseDouble(lat);
+    public Location(double lat, double lng) {
+      //   this.lat = Double.parseDouble(lat);
       //   this.lng = Double.parseDouble(lng);
+      this.lat = lat;
       this.lng = lng;
     }
   }

@@ -139,26 +139,25 @@ function addPostingsFromSearch() {
     params.append('keywords', s_keywords);
     params.append('lat', s_latlng.lat);
     params.append('lng', s_latlng.lng);
-    fetch(new Request('/search', {method: 'POST', body: params})).then(function(response) {
-        return response.json();
-    })
+    fetch(new Request('/search', {method: 'POST', body: params})).then(response => response.json())
         .then(function(responseJson) {
-            console.log("HEYYYY");
             console.log(responseJson);
-            rec_json = response_json;
+            rec_json = responseJson;
+
+            // for (posting of rec_json) {
+            //     posting.distance = get_distance(s_latlng, posting.location);
+            // }
+
+            // sort in order of distance
+            // rec_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
+
+            for (posting of rec_json) {
+                let corr_mark = addMarker(posting.location, posting.title, posting.pay);
+                createPosting(posting, postings, display_search, corr_mark);
+            }
     });
 
-    for (posting of rec_json) {
-        posting.distance = get_distance(s_latlng, posting.location);
-    }
-
-    // sort in order of distance
-    rec_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
-
-    for (posting of rec_json) {
-        let corr_mark = addMarker(posting.location, posting.title, posting.pay);
-        createPosting(posting, postings, display_search, corr_mark);
-    }
+    
 }
 
 // creates a posting item from JSON and adds it to posting list
@@ -202,10 +201,10 @@ function createPosting(posting, postingsList, option, corr_mark) {
 
     if(option == display_search) {
         // display distance and then price
-        if (posting.distance)
-            post_dist.innerText = posting.distance + ' mi';
-        else
+        if (posting.distance === undefined)
             post_dist.innerText = 'Remote job';
+        else
+            post_dist.innerText = posting.distance + ' mi';
         post_price.innerText = price;
         post_price.onclick = function() {
             window.location.href = '/show?id=' + posting.id;
