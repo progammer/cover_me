@@ -180,7 +180,7 @@ function createPosting(posting, postingsList, option, corr_mark) {
 
     let price = 'Negotiable';
     if (posting.pay != null) {
-        if(posting.pay.toString().contains('$'))
+        if(String(posting.pay).indexOf('$') >= 0)
             price = posting.pay;
         else price = '$' + posting.pay;
     }

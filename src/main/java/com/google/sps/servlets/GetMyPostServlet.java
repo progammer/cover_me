@@ -54,7 +54,6 @@ public class GetMyPostServlet extends HttpServlet {
       MyPost newPost = new MyPost(title, description, lat, lng, price, temp_post.getKey().getId());
       posts.add(newPost);
     }
-    System.out.println(posts);
     Gson gson = new Gson();
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(posts));
