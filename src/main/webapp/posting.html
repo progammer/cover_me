@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="styles/job_post.css">
         <script src="scripts/script.js"></script>
     </head>
-    <body>
+    <body onload="checkLogin()">
         <!-- header -->
         <div id="header">
             <div id="logo"><div>coverme♥️</div></div>
@@ -16,6 +16,9 @@
                 <input type="text" class="search-bar left" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" placeholder="Location">
                 <img class="search-button" src="images/search.png"/>
+            </div>
+            <div id="user-info">
+                <div>Loading...</div>
             </div>
         </div>
 

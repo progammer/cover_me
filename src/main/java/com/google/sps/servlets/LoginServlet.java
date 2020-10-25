@@ -2,6 +2,7 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,22 +15,35 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
-
-    String thisUrl = req.getRequestURI();
-
-    resp.setContentType("text/html");
-    if (req.getUserPrincipal() != null) {
-      resp.getWriter()
-          .println(
-              "<p>Hello, "
-                  + req.getUserPrincipal().getName()
-                  + "!  You can <a href=\""
-                  + userService.createLogoutURL(thisUrl)
-                  + "\">sign out</a>.</p>");
+    String url = "/";
+    String action = "logout";
+    String id = "";
+    String email = "";
+    if (userService.isUserLoggedIn()) {
+      url = userService.createLogoutURL(url);
+      id = userService.getCurrentUser().getUserId();
+      email = userService.getCurrentUser().getEmail();
     } else {
-      resp.getWriter()
-          .println(
-              "<p>Please <a href=\"" + userService.createLoginURL(thisUrl) + "\">sign in</a>.</p>");
+      url = userService.createLoginURL(url);
+      action = "login";
+    }
+    Gson gson = new Gson();
+    resp.setContentType("application/json");
+    resp.getWriter().println(gson.toJson(new AuthObj(action, url, id, email)));
+  }
+
+  private static class AuthObj {
+    // helps w/ json parsing
+    String action;
+    String url;
+    String id;
+    String email;
+
+    public AuthObj(String action, String url, String id, String email) {
+      this.action = action;
+      this.url = url;
+      this.id = id;
+      this.email = email;
     }
   }
 }
