@@ -38,27 +38,34 @@
 
 </body>
 
-<script>
-
-    document.getElementById('search-bar').onkeypress = function(e){
-        if (!e) e = window.event;
-        var keyCode = e.keyCode || e.which;
-        if (keyCode == '13'){
-            submit();
-        }
+<script>document.getElementById('search-bar').onkeypress = function(e){
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+        submit();
     }
+}
 
-    function submit() {
-        let url = '/search';
-        url += '?job=' + encodeURIComponent(document.getElementById('job_type').value);
-        // need to fix by calling maps api
-        url += '&location=' + document.getElementById('location').value;
-
-        fetch(url).then((response) => response.json())
+function submit() {
+    const params = new URLSearchParams();
+    params.append('keywords', document.getElementById('job_type').value);
+    let location = encodeURIComponent(document.getElementById('location').value);
+    //console.log("test" + location);
+    var loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ"));
+    
+    var geo_loc = loc_json.results[0].geometry.location;
+    params.append('lat', geo_loc.lat);
+    params.append('lng', geo_loc.lng);
+    fetch(new Request('/search', {method: 'POST', body: params})).then(function(response) {
+        console.log(response);
+        return response.json();
+    })
         .then(function(responseJson) {
-            // do something with json output of html response
-        });
-    }
+            console.log(responseJson);
+            displayMyPostings(responseJson);
+    });
+}
 </script>
+
 
 </html>
