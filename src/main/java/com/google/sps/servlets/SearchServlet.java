@@ -11,12 +11,12 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
-import java.util.HashSet;
 
 @SuppressWarnings("serial")
 @WebServlet("/search")
@@ -49,18 +49,18 @@ public class SearchServlet extends HttpServlet {
     }
 
     public double computeScore(String[] kws) {
-        Set <String> Kapp = new HashSet<String>();
-        String[] words = description.split("([.,!?:;()&\"\\s+])");
-        for (int i = 0; i < words.length; i++) {
-            Kapp.add(words[i]);
+      Set<String> Kapp = new HashSet<String>();
+      String[] words = (description + " " + title).split("([.,!?:;()&\"\\s+])");
+      for (int i = 0; i < words.length; i++) {
+        Kapp.add(words[i]);
+      }
+      for (int i = 0; i < kws.length; i++) {
+        if (Kapp.contains(kws[i])) {
+          score++;
+          break;
         }
-        for (int i = 0; i <kws.length; i++) {
-            if(Kapp.contains(kws[i])) {
-                score++;
-                break;
-            }
-        }
-        return score/distance;
+      }
+      return score / distance;
     }
 
     public int compareTo(Post other) {
