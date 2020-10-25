@@ -17,22 +17,57 @@
   <body onload="checkLogin()">
     <!-- header -->
     <div id="header">
-        <div id="logo"><div>coverme♥️</div></div>
+        <div id="logo" onclick="window.location.href='index.html';"><div>coverme♥️</div></div>
         <div id="search-bar">
-            <input type="text" class="search-bar left" placeholder="find a job to cover...">
-            <input type="text" class="search-bar right" placeholder="Location">
-            <img class="search-button" src="images/search.png"/>
+            <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
+            <input type="text" class="search-bar right" id="location" placeholder="Location">
+            <img onclick="submit()" class="search-button" src="images/search.png"/>
         </div>
         <div id="user-info">
             <div>Loading...</div>
         </div>
     </div>
 
-    <div class="main-row">
-        <div id="postings" class="main-column"></div>
+    <div class="main-row" onload="getMyPosts()">
+        <div id="postings" class="main-column">Postings for <div id="user_id"><div></div>
+        <div id="no-posts"></div>
         <div id="map" class="main-column"></div>
     </div>
 
 
-  </body>
+</body>
+
+<script>
+    function getMyPosts() {
+        fetch('/my_posts').then((response) => response.json())
+        .then(function(responseJson) {
+            if (responseJson) {
+                displayMyPostings(responseJson);
+            } else {
+                document.getElementById('no-posts').innerHTML = "ree";
+            }
+        });
+    }
+
+    document.getElementById('search-bar').onkeypress = function(e){
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == '13'){
+            submit();
+        }
+    }
+
+    function submit() {
+        let url = '/search';
+        url += '?job=' + encodeURIComponent(document.getElementById('job_type').value);
+        // need to fix by calling maps api
+        url += '&location=' + document.getElementById('location').value;
+
+        fetch(url).then((response) => response.json())
+        .then(function(responseJson) {
+            // do something with json output of html response
+        });
+    }
+</script>
+
 </html>

@@ -113,7 +113,7 @@ let fetch_json =
 const display_search = 0;
 const display_mine = 1;
 
-function displayMyPostings() {
+function displayMyPostings(fetch_json) {
     var postings = document.getElementById("postings");
 
     for (posting of fetch_json) {
