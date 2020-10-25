@@ -6,53 +6,55 @@ import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/create_post")
-public class CreatePostServlet extends HttpServlet {
+@WebServlet("/show")
+public class ShowServlet extends HttpServlet {
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
     /* String user_id = request.getParameter("user_id"); */
 
-    String title = request.getParameter("title");
-    String description = request.getParameter("description");
-    String category = request.getParameter("category");
-    String address = request.getParameter("address");
-    double lat = Double.parseDouble(request.getParameter("lat"));
-    double lng = Double.parseDouble(request.getParameter("lng"));
-    double pay = Double.parseDouble(request.getParameter("pay"));
-    String phone = request.getParameter("phone");
-    String email = request.getParameter("email");
-
+    long id = Long.parseLong(request.getParameter("id"));
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
-    KeyFactory keyFactory =
-        datastore
-            .newKeyFactory()
-            /* .addAncestors(PathElement.of("User", user_id)) */
-            .setKind("Post");
-    Key job_posting_key = datastore.allocateId(keyFactory.newKey());
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("Post");
+    Key postKey = keyFactory.newKey(id);
+    // Entity posting = datastore.get(postKey);
 
     Entity posting =
-        Entity.newBuilder(job_posting_key)
-            .set("user_id", email)
-            .set("title", title)
-            .set("description", description)
-            .set("category", category)
-            .set("address", address)
-            .set("lat", lat)
-            .set("lng", lng)
-            .set("pay", pay)
-            .set("email", email)
-            .set("phone", phone)
-            .set("id", job_posting_key.getId())
+        Entity.newBuilder(postKey)
+            .set("user_id", "test@example")
+            .set("title", "my job")
+            .set("description", "lololol")
+            .set("category", "poop")
+            .set("address", "my address")
+            .set("pay", 20.0)
+            .set("email", "test@example")
+            .set("phone", "41481249")
             .build();
 
-    datastore.put(posting);
+    request.setAttribute("title", posting.getString("title"));
+    request.setAttribute("description", posting.getString("description"));
+    double amt = posting.getDouble("pay");
+    DecimalFormat df = new DecimalFormat("#.00");
+    request.setAttribute("pay", "$" + df.format(amt));
+
+    request.setAttribute("category", posting.getString("category"));
+    request.setAttribute("email", posting.getString("email"));
+    request.setAttribute("phone", posting.getString("phone"));
+
+    String redirectURL = "/jsp/view_job.jsp";
+    System.out.println("FORWARDING");
+    request.getRequestDispatcher(redirectURL).forward(request, response);
+
+    // TODO: make an error not found page
 
     /* Entity retrieved = datastore.get(job_posting_key);
     System.out.println("-------------------");
@@ -89,8 +91,5 @@ public class CreatePostServlet extends HttpServlet {
       System.out.println(temp_post.getString("lng"));
       System.out.println(temp_post.getString("pay"));
     } */
-
-    response.setContentType("html/text");
-    response.getWriter().println(job_posting_key.getId());
   }
 }

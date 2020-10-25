@@ -49,7 +49,6 @@ function initView() {
 
     let geo_loc = displayMap(location.split(' ').join('+'));
     addMarker(geo_loc, title);
-
 }
 
 function displayMap(location) {
@@ -173,6 +172,9 @@ function createPosting(posting, postingsList, option) {
         price = '$' + posting.price[0] + ' - ' + '$' + posting.price[1];
     }
     
+    if(posting.id == null) {
+        posting.id = 1234; // dummy id
+    }
     if(option == display_search) {
         // display distance and then price
         if (posting.distance)
@@ -180,6 +182,7 @@ function createPosting(posting, postingsList, option) {
         else
             post_dist.innerText = 'Remote job';
         post_price.innerText = price;
+        
     } else if (option == display_mine) {
         post_dist.innerText = price;
         post_price.innerText = 'Remove Listing';
@@ -191,6 +194,12 @@ function createPosting(posting, postingsList, option) {
     post_div.appendChild(post_details);
     post_div.appendChild(post_dist);
     post_div.appendChild(post_price);
+
+    post_div.onclick = function() {
+        // fetch('/show?id=' + posting.id);
+        console.log(posting.id);
+        window.location.href = '/show?id=' + posting.id;
+    };
     postingsList.appendChild(post_div);
 }
 
