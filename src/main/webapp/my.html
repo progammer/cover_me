@@ -14,7 +14,7 @@
     <script src="scripts/script.js"></script>
     <script src="scripts/search_results.js"></script>
   </head>
-  <body onload="checkLogin()">
+  <body onload="checkLogin(getMyPosts)">
     <!-- header -->
     <div id="header">
         <div id="logo" onclick="window.location.href='index.html';"><div>coverme♥️</div></div>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="main-row" onload="getMyPosts()">
+    <div class="main-row">
         <div id="postings" class="main-column">Postings for <div id="user_id"><div></div>
         <div id="no-posts"></div>
         <div id="map" class="main-column"></div>
@@ -39,6 +39,7 @@
 
 <script>
     function getMyPosts() {
+        console.log('getting posts');
         fetch('/my_posts').then((response) => response.json())
         .then(function(responseJson) {
             if (responseJson) {

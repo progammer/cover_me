@@ -30,6 +30,7 @@
     var post_again = document.getElementById("post-again");
 
     function main() {
+
         let search_param = window.location.search.split("&");
         
         const params = new URLSearchParams();
@@ -59,7 +60,6 @@
 
         params.append("lat", geo_loc.lat);
         params.append("lng", geo_loc.lng);
-
         fetch(new Request('/create_post', {method: 'POST', body: params})).then((response) => response.text())
             .then(function(responseText) {
                 message.innerHTML = "Congrats! We will notify you when someone takes your job";

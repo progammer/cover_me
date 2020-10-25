@@ -117,10 +117,9 @@ function displayMyPostings(fetch_json) {
     var postings = document.getElementById("postings");
 
     for (posting of fetch_json) {
-        console.log(posting);
 
         createPosting(posting, postings, display_mine)
-        addMarker(posting.location, posting.title, posting.pay);
+        // addMarker(posting.location, posting.title, posting.pay);
     }
 }
 
@@ -134,7 +133,6 @@ function addPostingsFromSearch() {
     fetch_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
     for (posting of fetch_json) {
-        console.log(posting);
 
         createPosting(posting, postings, display_search);
 

@@ -7,7 +7,7 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
-import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
+import com.google.cloud.datastore.StructuredQuery;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,30 +28,33 @@ public class GetMyPostServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     String user_id = "";
     if (userService.isUserLoggedIn()) {
-      user_id = userService.getCurrentUser().getUserId();
+      user_id = userService.getCurrentUser().getEmail();
+    } else {
+      return;
     }
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
     Query<Entity> query =
         Query.newEntityQueryBuilder()
             .setKind("Post")
-            .setFilter(
-                PropertyFilter.hasAncestor(
-                    datastore.newKeyFactory().setKind("User").newKey(user_id)))
+            .setFilter(StructuredQuery.PropertyFilter.eq("user_id", user_id))
+            // .setFilter(
+            //     PropertyFilter.hasAncestor(
+            //         datastore.newKeyFactory().setKind("User").newKey(user_id)))
             .build();
     QueryResults<Entity> user_posts = datastore.run(query);
-
     ArrayList<MyPost> posts = new ArrayList<>();
     while (user_posts.hasNext()) {
       Entity temp_post = user_posts.next();
+
       String title = temp_post.getString("title");
       String description = temp_post.getString("description");
-      double lat = temp_post.getDouble("lat");
-      double lng = temp_post.getDouble("lng");
-      String price = temp_post.getString("price");
+      String lat = temp_post.getString("lat");
+      String lng = temp_post.getString("lng");
+      String price = temp_post.getString("pay");
       MyPost newPost = new MyPost(title, description, lat, lng, price);
       posts.add(newPost);
     }
-
+    System.out.println(posts);
     Gson gson = new Gson();
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(posts));
@@ -61,16 +64,16 @@ public class GetMyPostServlet extends HttpServlet {
     // helps w/ json parsing
     String title;
     String description;
-    double lat;
-    double lng;
-    String price;
+    String lat;
+    String lng;
+    String pay;
 
-    public MyPost(String title, String description, double lat, double lng, String price) {
+    public MyPost(String title, String description, String lat, String lng, String price) {
       this.title = title;
       this.description = description;
       this.lat = lat;
       this.lng = lng;
-      this.price = price;
+      this.pay = price;
     }
   }
 }

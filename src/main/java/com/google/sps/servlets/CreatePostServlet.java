@@ -1,5 +1,7 @@
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
@@ -18,15 +20,17 @@ public class CreatePostServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     /* String user_id = request.getParameter("user_id"); */
 
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
+
     String title = request.getParameter("title");
     String description = request.getParameter("description");
     String category = request.getParameter("category");
     String address = request.getParameter("address");
-    double lat = Double.parseDouble(request.getParameter("lat"));
-    double lng = Double.parseDouble(request.getParameter("lng"));
-    double pay = Double.parseDouble(request.getParameter("pay"));
+    String lat = request.getParameter("lat");
+    String lng = request.getParameter("lng");
+    String pay = request.getParameter("pay");
     String phone = request.getParameter("phone");
-    String email = request.getParameter("email");
 
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
