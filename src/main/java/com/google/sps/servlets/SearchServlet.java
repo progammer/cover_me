@@ -123,16 +123,13 @@ public class SearchServlet extends HttpServlet {
         String title = temp_post.getString("title");
         System.out.println(title);
         String description = temp_post.getString("description");
-<<<<<<< HEAD
-        String price;
+        double price;
         try {
-          price = temp_post.getString("pay");
+          price = temp_post.getDouble("pay");
         } catch (ClassCastException e) {
-          price = temp_post.getDouble("pay") + "";
+          price = Double.parseDouble(temp_post.getString("pay"));
         }
-=======
-        double price = temp_post.getDouble("pay");
->>>>>>> 3b30960b977d8857b995623f1eaf5ff92e5d6ca5
+
         Post newPost = new Post(title, description, lat, lng, price, computedDistance);
         postsIncreasingDistance.add(newPost);
       }
