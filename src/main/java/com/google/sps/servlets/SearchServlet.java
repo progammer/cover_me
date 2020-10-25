@@ -25,14 +25,22 @@ public class SearchServlet extends HttpServlet {
     private Location location;
     private double pay;
     private double distance;
+    private long id;
 
     public Post(
-        String title, String description, double lat, double lng, double price, double distance) {
+        String title,
+        String description,
+        double lat,
+        double lng,
+        double price,
+        double distance,
+        long id) {
       this.title = title;
       this.description = description;
       this.location = new Location(lat, lng);
       this.pay = price;
       this.distance = Math.round(distance);
+      this.id = id;
     }
 
     public int compareTo(Post other) {
@@ -40,7 +48,17 @@ public class SearchServlet extends HttpServlet {
     }
 
     public String toString() {
-      return title + " " + description + " " + location.lat + " " + location.lng + " " + pay + " " + distance;
+      return title
+          + " "
+          + description
+          + " "
+          + location.lat
+          + " "
+          + location.lng
+          + " "
+          + pay
+          + " "
+          + distance;
     }
   }
 
@@ -147,7 +165,9 @@ public class SearchServlet extends HttpServlet {
           price = Double.parseDouble(temp_post.getString("pay"));
         }
 
-        Post newPost = new Post(title, description, lat, lng, price, computedDistance);
+        Post newPost =
+            new Post(
+                title, description, lat, lng, price, computedDistance, temp_post.getKey().getId());
         postsIncreasingDistance.add(newPost);
       }
     }

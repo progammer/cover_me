@@ -13,6 +13,7 @@
         ></script>
         <script src="../scripts/script.js"></script>
         <script src="../scripts/search_results.js"></script>
+        <script src="../scripts/header_search.js"></script>
     </head>
     <body onload="checkLogin()">
         <div id="header">
@@ -20,7 +21,7 @@
             <div id="search-bar">
                 <input type="text" class="search-bar left" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" placeholder="Location">
-                <img class="search-button" src="images/search.png"/>
+                <img onclick="submit_search()" class="search-button" src="images/search.png"/>
             </div>
             <div id="user-info">
                 <div>Loading...</div>
