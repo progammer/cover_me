@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 import java.util.HashSet;
 
+@SuppressWarnings("serial")
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
 

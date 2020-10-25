@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@SuppressWarnings("serial")
 @WebServlet("/create_account")
 public class CreateAccountServlet extends HttpServlet {
 
+    // NOTE: NOT USED
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String username = request.getParameter("username");
