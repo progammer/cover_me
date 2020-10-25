@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>cover me</title>
-    <link rel="stylesheet" href="landing.css">
     <link id="style" rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/landing.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="dependencies/bootstrap.min.css">
     <link rel="stylesheet" href="dependencies/mdb.min.css">
@@ -15,20 +16,35 @@
     <script src="scripts/script.js"></script>
   </head>
   <body>
-    <div id="logo"onclick="window.location.href='index.html';">cover me &#10084;</div> 
-    <div id="tagline"></div>
+    <div id="header">
+        <div id="user-info">
+            <div>Loading...</div>
+        </div>
+    </div>
+    <div id="banner">
+        <div id="logo" onclick="window.location.href='index.html';">coverme♥️</div> 
+        <div id="search-bar">
+            <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
+            <input type="text" class="search-bar right" id="location" placeholder="Location">
+            <img onclick="submit()" class="search-button" src="images/search.png"/>
+        </div>
+        <div id="tagline">
+            <p>unable to find work? job displaced by the pandemic?</p>
+            <p>see if anyone in your local community needs your help in the meantime!</p>
+        </div>
+    </div>
+    
 
 
     <!-- Search form -->
     <form id="search" style="font-family: 'Quicksand'" class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
     <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="need something covered?">
-    <i class="fas fa-search" aria-hidden="true"></i>
+    <i class="fas fa-search"></i>
     </form>
 
     <a href="my.html">go to my.html</a><br>
     <a href="search_results.html">go to search_results.html</a><br>
     <a href="posting.html">go to posting.html</a><br>
-    <a href="view_job.html">go to view_job.html</a><br>
 
 
     <button id="submit">button</button>

@@ -1,5 +1,73 @@
+#header {
+    background-color: #93c47dff;
+    height: 125px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
 
-#top {
-    text-align:center;
-    font-size:80px;
+#banner {
+    background-color: #93c47dff;
+    height: calc(80% - 125px);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#logo {
+    font-size: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 275px;
+    cursor: pointer;
+}
+
+#search-bar {
+    background-color: white;
+    border-radius: 50px;
+    height: 100px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    width: 1000px;
+    left: calc(50% - 500px);
+}
+
+.search-bar {
+    margin: 0;
+    border-color: transparent;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.search-bar.left {
+    padding-right: 2%;
+    width: 50%;
+}
+
+.search-bar.right {
+    padding-left: 2%;
+    border-left: 2px #999999 solid;
+    width: 30%;
+}
+
+.search-button {
+    align-self: center;
+    cursor: pointer;
+    justify-self: flex-end;
+    object-fit: contain;
+    height: 40px;
+    width: 50px;
+}
+
+#user-info {
+    font-size: 1.1em;
+    position: absolute;
+    right: 0%;
+    padding-right: 50px;
+    top: calc(50% - 0.55em);
 }
