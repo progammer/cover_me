@@ -35,7 +35,7 @@ public class CreatePostServlet extends HttpServlet {
             .newKeyFactory()
             /* .addAncestors(PathElement.of("User", user_id)) */
             .setKind("Post");
-    Key job_posting_key = keyFactory.newKey(email);
+    Key job_posting_key = datastore.allocateId(keyFactory.newKey());
 
     Entity posting =
         Entity.newBuilder(job_posting_key)
@@ -60,7 +60,13 @@ public class CreatePostServlet extends HttpServlet {
     System.out.println(retrieved.getString("description"));
     System.out.println(retrieved.getString("address"));
     System.out.println(retrieved.getDouble("lat"));
-    System.out.println(retrieved.getDouble("pay")); */
+    System.out.println(retrieved.getDouble("pay"));
+    System.out.println(job_posting_key);
+    System.out.println("-------------------");
+
+    long id = job_posting_key.getId();
+    Key test = keyFactory.newKey(id);
+    System.out.println(datastore.get(test)); */
 
     /* Query<Entity> query =
         Query.newEntityQueryBuilder()
