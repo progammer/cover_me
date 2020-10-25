@@ -1,0 +1,78 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>cover me</title>
+        <link id="style" rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/header.css">
+        <link rel="stylesheet" href="styles/job_post.css">
+    </head>
+    <body>
+        <!-- header -->
+        <div id="header">
+            <div id="logo"><div>coverme♥️</div></div>
+            <div id="search-bar">
+                <input type="text" class="search-bar left" placeholder="find a job to cover...">
+                <input type="text" class="search-bar right" placeholder="Location">
+                <img class="search-button" src="images/search.png"/>
+            </div>
+        </div>
+
+        <div>
+            <p id="message"></p>
+            <a id="post-again" href="posting.html"></a>
+        </div>
+    </body>
+</html>
+<script>
+    var api_key = "AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ";
+    var message = document.getElementById("message");
+    var post_again = document.getElementById("post-again");
+
+    function main() {
+        let search_param = window.location.search.split("&");
+        
+        const params = new URLSearchParams();
+        params.append("title", search_param[0].split("=")[1].split("+").join(" "));
+        params.append("description", search_param[1].split("=")[1].split("+").join(" "));
+        params.append("category", search_param[2].split("=")[1].split("+").join(" "));
+
+        if (!search_param[3].split("=")[1].match(/^[0-9]+\.*[0-9]*$/)) {
+            message.innerHTML = "Oops, you entered an invalid budget!";
+            post_again.innerHTML = "Please try again";
+            return;
+        }
+        params.append("pay", search_param[3].split("=")[1]);
+
+        params.append("phone", search_param[4].split("=")[1]);
+        params.append("email", search_param[5].split("=")[1]);
+        params.append("address", search_param[6].split("=")[1].split("+").join(" "));
+
+        let loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + search_param[6].split("=")[1] + "&key=" + api_key));
+        if (loc_json.results[0] == undefined) {
+            message.innerHTML = "Oh no, we couldn't find your address!";
+            post_again.innerHTML = "Please try again";
+            return;
+        }
+        
+        let geo_loc = loc_json.results[0].geometry.location;
+
+        params.append("lat", geo_loc.lat);
+        params.append("lng", geo_loc.lng);
+
+        fetch(new Request('/create_post', {method: 'POST', body: params})).then((response) => response.text())
+            .then(function(responseText) {
+                message.innerHTML = "Congrats! We will notify you when someone takes your job";
+                post_again.innerHTML = "Post another job";
+        });
+    }
+
+    main();
+    
+    function Get(yourUrl){
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET", yourUrl, false);
+        Httpreq.send(null);
+        return Httpreq.responseText;          
+    }
+</script>

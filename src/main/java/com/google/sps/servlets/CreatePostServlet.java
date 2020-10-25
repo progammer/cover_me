@@ -5,7 +5,6 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
-import com.google.cloud.datastore.PathElement;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,29 +16,38 @@ public class CreatePostServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String user_id = request.getParameter("user_id");
+    /* String user_id = request.getParameter("user_id"); */
     String title = request.getParameter("title");
     String description = request.getParameter("description");
+    String category = request.getParameter("category");
     String address = request.getParameter("address");
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
     double pay = Double.parseDouble(request.getParameter("pay"));
+    String phone = request.getParameter("phone");
+    String email = request.getParameter("email");
 
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
     KeyFactory keyFactory =
-        datastore.newKeyFactory().addAncestors(PathElement.of("User", user_id)).setKind("Post");
+        datastore
+            .newKeyFactory()
+            /* .addAncestors(PathElement.of("User", user_id)) */
+            .setKind("Post");
     Key job_posting_key = datastore.allocateId(keyFactory.newKey());
 
     Entity posting =
         Entity.newBuilder(job_posting_key)
-            .set("user_id", user_id)
+            /* .set("user_id", user_id) */
             .set("title", title)
             .set("description", description)
+            .set("category", category)
             .set("address", address)
             .set("lat", lat)
             .set("lng", lng)
             .set("pay", pay)
+            .set("email", email)
+            .set("phone", phone)
             .build();
 
     datastore.put(posting);
