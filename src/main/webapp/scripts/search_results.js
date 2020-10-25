@@ -121,7 +121,11 @@ function addPostingsFromSearch() {
             // rec_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
             for (posting of rec_json) {
-                let corr_mark = addMarker(posting.location, posting.title, posting.pay);
+                //GET LOCATION
+                let loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + posting.address + "&key=" + api_key));               
+                let geo_loc = loc_json.results[0].geometry.location;
+
+                let corr_mark = addMarker(geo_loc, posting.title, posting.pay);
                 createPosting(posting, postings, display_search, corr_mark);
             }
             zoom_to_fit_bounds();

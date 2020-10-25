@@ -30,6 +30,7 @@ public class SearchServlet extends HttpServlet {
     private double distance;
     private long id;
     private double score;
+    private String address;
 
     public Post(
         String title,
@@ -38,7 +39,8 @@ public class SearchServlet extends HttpServlet {
         double lng,
         double price,
         double distance,
-        long id) {
+        long id,
+        String address) {
       this.title = title;
       this.description = description;
       this.location = new Location(lat, lng);
@@ -46,6 +48,7 @@ public class SearchServlet extends HttpServlet {
       this.distance = Math.round(distance);
       this.id = id;
       this.score = 0;
+      this.address = address;
     }
 
     public double computeScore(String[] kws) {
@@ -78,7 +81,9 @@ public class SearchServlet extends HttpServlet {
           + " "
           + pay
           + " "
-          + distance;
+          + distance
+          + " "
+          + address;
     }
   }
 
@@ -147,6 +152,7 @@ public class SearchServlet extends HttpServlet {
     ArrayList<Post> postsIncreasingDistance = new ArrayList<>();
     while (user_posts.hasNext()) {
       //   System.out.println("in");
+
       Entity temp_post = user_posts.next();
       double otherLat;
       try {
@@ -187,7 +193,14 @@ public class SearchServlet extends HttpServlet {
 
         Post newPost =
             new Post(
-                title, description, lat, lng, price, computedDistance, temp_post.getKey().getId());
+                title,
+                description,
+                lat,
+                lng,
+                price,
+                computedDistance,
+                temp_post.getKey().getId(),
+                temp_post.getString("address"));
         postsIncreasingDistance.add(newPost);
         newPost.computeScore(kws);
       }
