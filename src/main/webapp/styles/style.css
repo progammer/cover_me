@@ -9,6 +9,10 @@ html, body {
     padding: 0;
 }
 
+a:link, a:visited {
+    color: #434343;
+}
+
 input, textarea, button, select, select option {
     font-family: 'Nunito', sans-serif;
     color: #434343;
