@@ -61,7 +61,7 @@ function initView() {
     let budget = document.getElementById('pay').innerText.replace("\$", "");
 
     let geo_loc = displayMap(location.split(' ').join('+'));
-    addMarker(geo_loc, title, budget);
+    addMarker(geo_loc, title, budget, true);
 
     document.getElementById('pay').innerText = '$' + budget;
 
@@ -225,7 +225,11 @@ function createPosting(posting, postingsList, option, corr_mark) {
     postingsList.appendChild(post_div);
 }
 
-function addMarker(location, title, pay) {
+function addMarker(location, title, pay, is_single) {
+    let mouse_shape = "pointer";
+    if (is_single) {
+        mouse_shape = "default";
+    }
 
     let marker = new google.maps.Marker({
         position: location,
@@ -243,13 +247,16 @@ function addMarker(location, title, pay) {
             color: 'black',
             fontWeight: 'bold',
             fontSize: '14px',
-            text: '$' + parseInt(pay)
-        }
+            text: "$" + parseInt(pay)
+        },
+        cursor: mouse_shape
     });
 
     marker.addListener("mouseover", mouseover_marker);
     marker.addListener("mouseout", mouseout_marker);
-    marker.addListener("click", markerClick);
+    if (!is_single) {
+        marker.addListener("click", markerClick);
+    }
 
     return marker;
 }
