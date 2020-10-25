@@ -42,6 +42,7 @@ public class SearchServlet extends HttpServlet {
     }
   }
 
+  // miles
   private double distance(double lat1, double lon1, double lat2, double lon2) {
     if ((lat1 == lat2) && (lon1 == lon2)) {
       return 0;
@@ -70,6 +71,9 @@ public class SearchServlet extends HttpServlet {
     final double OFFSET = 0.5;
     double lngUpper = lng + OFFSET;
     double lngLower = lng - OFFSET;
+
+    Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
+
     Query<Entity> query =
         Query.newEntityQueryBuilder()
             .setKind("Post")
@@ -78,18 +82,27 @@ public class SearchServlet extends HttpServlet {
                     PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower)))
             .build();
 
-    Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
     QueryResults<Entity> user_posts = datastore.run(query);
 
     ArrayList<Post> postsIncreasingDistance = new ArrayList<>();
     while (user_posts.hasNext()) {
       System.out.println("in");
       Entity temp_post = user_posts.next();
-      double otherLat = Double.parseDouble(temp_post.getString("lat"));
-      double otherLng = Double.parseDouble(temp_post.getString("lng"));
+      double otherLat;
+      try {
+        otherLat = Double.parseDouble(temp_post.getString("lat"));
+      } catch (ClassCastException e) {
+        otherLat = temp_post.getDouble("lat");
+      }
+      double otherLng;
+      try {
+        otherLng = Double.parseDouble(temp_post.getString("lng"));
+      } catch (ClassCastException e) {
+        otherLng = temp_post.getDouble("lng");
+      }
       double computedDistance = distance(lat, lng, otherLat, otherLng);
 
-      if (computedDistance <= OFFSET) {
+      if (computedDistance <= 30) {
         // need another nested if to check for matching categories
         // String category = temp_post.getString("category");
         // for (int i = 0; i < kws.length; i++) {
@@ -103,14 +116,21 @@ public class SearchServlet extends HttpServlet {
         //   }
         //  }
         String title = temp_post.getString("title");
+        System.out.println(title);
         String description = temp_post.getString("description");
-        String price = temp_post.getString("pay");
+        String price;
+        try {
+          price = temp_post.getString("pay");
+        } catch (ClassCastException e) {
+          price = temp_post.getDouble("pay") + "";
+        }
         Post newPost = new Post(title, description, lat, lng, price, computedDistance);
         postsIncreasingDistance.add(newPost);
       }
     }
 
     Collections.sort(postsIncreasingDistance);
+    System.out.println(postsIncreasingDistance);
     Gson gson = new Gson();
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(postsIncreasingDistance));

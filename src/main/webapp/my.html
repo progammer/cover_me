@@ -56,12 +56,8 @@ function submit() {
     var geo_loc = loc_json.results[0].geometry.location;
     params.append('lat', geo_loc.lat);
     params.append('lng', geo_loc.lng);
-    fetch(new Request('/search', {method: 'POST', body: params})).then(function(response) {
-        console.log(response);
-        return response.json();
-    })
+    fetch(new Request('/search', {method: 'POST', body: params})).then((response) => (response.json()) )
         .then(function(responseJson) {
-            console.log(responseJson);
             displayMyPostings(responseJson);
     });
 }
