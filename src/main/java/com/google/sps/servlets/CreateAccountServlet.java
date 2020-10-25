@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/create_account")
 public class CreateAccountServlet extends HttpServlet {
 
-    // NOTE: NOT USED
+  // NOTE: NOT USED
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String username = request.getParameter("username");
