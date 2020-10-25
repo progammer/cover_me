@@ -39,8 +39,19 @@ function initMy() {
     postings.appendChild(search_header);
 
     displayMap(location);
+    getMyPosts();
 
-    displayMyPostings();
+}
+
+function getMyPosts() {
+    fetch('/my_posts').then((response) => response.json())
+    .then(function(responseJson) {
+        if (responseJson) {
+            displayMyPostings(responseJson);
+        } else {
+            document.getElementById('no-posts').innerHTML = "ree";
+        }
+    });
 }
 
 function initView() {
@@ -57,7 +68,6 @@ function displayMap(location) {
     var loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + api_key));
     var geo_loc = loc_json.results[0].geometry.location;
     s_latlng = geo_loc;
-
     map = new google.maps.Map(document.getElementById("map"), {
         center: geo_loc,
         zoom: 12,
@@ -74,6 +84,7 @@ let fetch_json =
             {
                 "title": "Help Me Hack! 1",
                 "description": "Please someone come help me",
+                "lat": 30.27235125, "lng": -97.7150332,
                 "location": {"lat": 30.27235125, "lng": -97.7150332},
                 "pay": 10,
                 "author": "Ethan Lao"
@@ -117,8 +128,6 @@ function displayMyPostings(fetch_json) {
     var postings = document.getElementById("postings");
 
     for (posting of fetch_json) {
-
-
         let corr_mark = addMarker(posting.location, posting.title, posting.pay);
         createPosting(posting, postings, display_mine, corr_mark)
     }
@@ -171,12 +180,15 @@ function createPosting(posting, postingsList, option, corr_mark) {
 
     let price = 'Negotiable';
     if (posting.pay != null) {
-        price = '$' + posting.pay;
+        if(posting.pay.toString().contains('$'))
+            price = posting.pay;
+        else price = '$' + posting.pay;
     }
     
     if(posting.id == null) {
         posting.id = 1234; // dummy id
     }
+
     if(option == display_search) {
         // display distance and then price
         if (posting.distance)

@@ -51,7 +51,7 @@ public class GetMyPostServlet extends HttpServlet {
       String lat = temp_post.getString("lat");
       String lng = temp_post.getString("lng");
       String price = temp_post.getString("pay");
-      MyPost newPost = new MyPost(title, description, lat, lng, price);
+      MyPost newPost = new MyPost(title, description, lat, lng, price, temp_post.getKey().getId());
       posts.add(newPost);
     }
     System.out.println(posts);
@@ -64,16 +64,26 @@ public class GetMyPostServlet extends HttpServlet {
     // helps w/ json parsing
     String title;
     String description;
-    String lat;
-    String lng;
+    Location location;
     String pay;
+    long id;
 
-    public MyPost(String title, String description, String lat, String lng, String price) {
+    public MyPost(String title, String description, String lat, String lng, String price, long id) {
       this.title = title;
       this.description = description;
-      this.lat = lat;
-      this.lng = lng;
+      location = new Location(lat, lng);
       this.pay = price;
+      this.id = id;
+    }
+  }
+
+  private static class Location {
+    double lat;
+    double lng;
+
+    public Location(String lat, String lng) {
+      this.lat = Double.parseDouble(lat);
+      this.lng = Double.parseDouble(lng);
     }
   }
 }
