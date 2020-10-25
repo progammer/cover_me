@@ -5,8 +5,6 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
-import com.google.cloud.datastore.StructuredQuery.CompositeFilter;
-import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +22,11 @@ public class SearchServlet extends HttpServlet {
     private String description;
     private double lat;
     private double lng;
-    private String price;
+    private double price;
     private double distance;
 
     public Post(
-        String title, String description, double lat, double lng, String price, double distance) {
+        String title, String description, double lat, double lng, double price, double distance) {
       this.title = title;
       this.description = description;
       this.lat = lat;
@@ -66,16 +64,16 @@ public class SearchServlet extends HttpServlet {
     String[] kws = request.getParameter("keywords").split(",");
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
-    // int r = Integer.parseInt(request.getParameter("radius"));
+
     final double OFFSET = 0.5;
     double lngUpper = lng + OFFSET;
     double lngLower = lng - OFFSET;
     Query<Entity> query =
         Query.newEntityQueryBuilder()
             .setKind("Post")
-            .setFilter(
-                CompositeFilter.and(
-                    PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower)))
+            /* .setFilter(
+            CompositeFilter.and(
+                PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower))) */
             .build();
 
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
@@ -85,8 +83,8 @@ public class SearchServlet extends HttpServlet {
     while (user_posts.hasNext()) {
       System.out.println("in");
       Entity temp_post = user_posts.next();
-      double otherLat = Double.parseDouble(temp_post.getString("lat"));
-      double otherLng = Double.parseDouble(temp_post.getString("lng"));
+      double otherLat = temp_post.getDouble("lat");
+      double otherLng = temp_post.getDouble("lng");
       double computedDistance = distance(lat, lng, otherLat, otherLng);
 
       if (computedDistance <= OFFSET) {
@@ -104,7 +102,7 @@ public class SearchServlet extends HttpServlet {
         //  }
         String title = temp_post.getString("title");
         String description = temp_post.getString("description");
-        String price = temp_post.getString("pay");
+        double price = temp_post.getDouble("pay");
         Post newPost = new Post(title, description, lat, lng, price, computedDistance);
         postsIncreasingDistance.add(newPost);
       }

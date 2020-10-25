@@ -9,12 +9,7 @@ function initSearch() {
     let search_param = window.location.search.split("&");
     s_keywords = search_param[0].split("=")[1].split("+");
     s_location = search_param[1].split("=")[1];
-    s_radius = search_param[2].split("=")[1];
-    if (s_radius == "default") {
-        s_radius = 25;
-    } else {
-        s_radius = parseInt(s_radius);
-    }
+    
     var postings = document.getElementById("postings");
     postings.textContent = '';
 
@@ -138,14 +133,29 @@ function displayMyPostings(fetch_json) {
 
 function addPostingsFromSearch() {
     var postings = document.getElementById("postings");
-    for (posting of fetch_json) {
+
+    let rec_json;
+    const params = new URLSearchParams();
+    params.append('keywords', s_keywords);
+    params.append('lat', s_latlng.lat);
+    params.append('lng', s_latlng.lng);
+    fetch(new Request('/search', {method: 'POST', body: params})).then(function(response) {
+        return response.json();
+    })
+        .then(function(responseJson) {
+            console.log("HEYYYY");
+            console.log(responseJson);
+            rec_json = response_json;
+    });
+
+    for (posting of rec_json) {
         posting.distance = get_distance(s_latlng, posting.location);
     }
 
     // sort in order of distance
-    fetch_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
+    rec_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
-    for (posting of fetch_json) {
+    for (posting of rec_json) {
         let corr_mark = addMarker(posting.location, posting.title, posting.pay);
         createPosting(posting, postings, display_search, corr_mark);
     }

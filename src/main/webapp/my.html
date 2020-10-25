@@ -47,7 +47,7 @@
 }
 
 function submit() {
-    const params = new URLSearchParams();
+    /* const params = new URLSearchParams();
     params.append('keywords', document.getElementById('job_type').value);
     let location = encodeURIComponent(document.getElementById('location').value);
     //console.log("test" + location);
@@ -63,7 +63,10 @@ function submit() {
         .then(function(responseJson) {
             console.log(responseJson);
             displayMyPostings(responseJson);
-    });
+    }); */
+
+    window.location.href = "search_results.html?q=" + document.getElementById('job_type').value
+        + "&location=" + document.getElementById('location').value;
 }
 </script>
 
