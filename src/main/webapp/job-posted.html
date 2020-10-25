@@ -4,12 +4,13 @@
         <meta charset="UTF-8">
         <title>cover me</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="scripts/script.js"></script>
         <script src="scripts/search_results.js"></script>
         <link id="style" rel="stylesheet" href="styles/style.css">
         <link rel="stylesheet" href="styles/header.css">
         <link rel="stylesheet" href="styles/job_post.css">
     </head>
-    <body>
+    <body onload="checkLogin()">
         <!-- header -->
         <div id="header">
             <div id="logo" onclick="window.location.href='index.html';"><div>coverme♥️</div></div>
@@ -17,6 +18,9 @@
                 <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" id="location" placeholder="Location">
                 <img onclick="submit_search()" class="search-button" src="images/search.png"/>
+            </div>
+            <div id="user-info">
+                <div>Loading...</div>
             </div>
         </div>
 
@@ -79,6 +83,8 @@
         str = str.split("%26").join("&");
         str = str.split("%3B").join(";");
         str = str.split("%2F").join("/");
+        str = str.split("%27").join("\'");
+        str = str.split("%21").join("!");
         return str;
     }
 

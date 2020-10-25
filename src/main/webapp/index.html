@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles/landing.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <script src="scripts/script.js"></script>
+    <script src="scripts/header_search.js"></script>
   </head>
   <body onload="checkLogin()">
     <div id="header">
@@ -25,7 +26,7 @@
         <div id="search-bar">
             <input type="text" class="search-bar left" id="job_type" placeholder="find a job to cover...">
             <input type="text" class="search-bar right" id="location" placeholder="Location">
-            <img onclick="submit()" class="search-button" src="images/search.png"/>
+            <img onclick="submit_search()" class="search-button" src="images/search.png"/>
         </div>
         <div id="tagline">
             <p>unable to find work? job displaced by the pandemic?</p>
