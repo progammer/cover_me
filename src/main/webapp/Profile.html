@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>coverme</title>
+            <link rel="stylesheet" type="text/css" href="styles/search_results.css" />
+        <link rel="stylesheet" href="styles/header.css">
+        <link id="style" rel="stylesheet" href="styles/profile.css">
+        <link id="style" rel="stylesheet" href="styles/style.css">
+        <script src="scripts/script.js"></script>
+    </head>
+    <body>
+        Name<br>
+        <img src="images/pfp/blacksquare.png" width="150px" height="150px">
+        <form action="<%= blobstoreService.createUploadUrl('/upload') %>" method="post" enctype="multipart/form-data">
+            <input type="file" name="myFile">
+        </form><br>
+        Skills: <br>
+        Contact info: <br>
+        Location: <br>
+        
+        
+    </body>
+</html>

@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Set;
+import java.util.HashSet;
 
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
@@ -26,6 +28,7 @@ public class SearchServlet extends HttpServlet {
     private double pay;
     private double distance;
     private long id;
+    private double score;
 
     public Post(
         String title,
@@ -41,10 +44,26 @@ public class SearchServlet extends HttpServlet {
       this.pay = price;
       this.distance = Math.round(distance);
       this.id = id;
+      this.score = 0;
+    }
+
+    public double computeScore(String[] kws) {
+        Set <String> Kapp = new HashSet<String>();
+        String[] words = description.split("([.,!?:;()&\"\\s+])");
+        for (int i = 0; i < words.length; i++) {
+            Kapp.add(words[i]);
+        }
+        for (int i = 0; i <kws.length; i++) {
+            if(Kapp.contains(kws[i])) {
+                score++;
+                break;
+            }
+        }
+        return score/distance;
     }
 
     public int compareTo(Post other) {
-      return Double.compare(distance, other.distance);
+      return Double.compare(other.score, score);
     }
 
     public String toString() {
@@ -169,6 +188,7 @@ public class SearchServlet extends HttpServlet {
             new Post(
                 title, description, lat, lng, price, computedDistance, temp_post.getKey().getId());
         postsIncreasingDistance.add(newPost);
+        newPost.computeScore(kws);
       }
     }
 

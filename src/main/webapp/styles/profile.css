@@ -1,0 +1,9 @@
+.profile {
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    padding: 40px;
+    width: 80%;
+    position: relative;
+    left: 40px;
+    top: 50px;
+}
