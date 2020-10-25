@@ -18,7 +18,9 @@ function initSearch() {
     search_header.innerHTML = "Search results near " + s_location.split("+").join(" ");
     postings.appendChild(search_header);
 
-    displayMap(s_location);
+    if (displayMap(s_location) == null) {
+        return;
+    }
 
     addPostingsFromSearch();
 }
