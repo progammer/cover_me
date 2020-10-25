@@ -17,6 +17,7 @@ public class CreatePostServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     /* String user_id = request.getParameter("user_id"); */
+
     String title = request.getParameter("title");
     String description = request.getParameter("description");
     String category = request.getParameter("category");
@@ -34,11 +35,11 @@ public class CreatePostServlet extends HttpServlet {
             .newKeyFactory()
             /* .addAncestors(PathElement.of("User", user_id)) */
             .setKind("Post");
-    Key job_posting_key = datastore.allocateId(keyFactory.newKey());
+    Key job_posting_key = keyFactory.newKey(email);
 
     Entity posting =
         Entity.newBuilder(job_posting_key)
-            /* .set("user_id", user_id) */
+            .set("user_id", email)
             .set("title", title)
             .set("description", description)
             .set("category", category)
