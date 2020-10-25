@@ -57,10 +57,13 @@ function getMyPosts() {
 function initView() {
     let location = document.getElementById('job-address').innerText;
     let title = document.getElementById('job-name').innerText;
-
+    let pay = document.getElementById('pay').innerText.substring('$');
     let geo_loc = displayMap(location.split(' ').join('+'));
 
-    addMarker(geo_loc, title, null);
+    addMarker(geo_loc, title, pay);
+    
+    if(pay.indexOf('$') < 0)
+        document.getElementById('pay').innerText = '$' + pay;
 
 }
 
@@ -143,8 +146,6 @@ function addPostingsFromSearch() {
     fetch_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
     for (posting of fetch_json) {
-
-        
         let corr_mark = addMarker(posting.location, posting.title, posting.pay);
         createPosting(posting, postings, display_search, corr_mark);
     }
@@ -205,13 +206,14 @@ function createPosting(posting, postingsList, option, corr_mark) {
         };
     }
 
+    console.log("id: " + posting.id);
+
     post_div.appendChild(post_details);
     post_div.appendChild(post_dist);
     post_div.appendChild(post_price);
 
     post_div.onclick = function() {
         // fetch('/show?id=' + posting.id);
-        console.log(posting.id);
         window.location.href = '/show?id=' + posting.id;
     };
     postingsList.appendChild(post_div);
@@ -235,7 +237,7 @@ function addMarker(location, title, pay) {
             color: 'black',
             fontWeight: 'bold',
             fontSize: '14px',
-            text: "$" + parseInt(pay)
+            text: '$' + parseInt(pay)
         }
     });
 

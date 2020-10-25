@@ -15,7 +15,7 @@
     </head>
     <body onload="checkLogin(initView)">
         <div id="header">
-            <div id="logo"><div>coverme♥️</div></div>
+            <div id="logo"><div>coverme&#9829;</div></div>
             <div id="search-bar">
                 <input type="text" class="search-bar left" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" placeholder="Location">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-section">
                     <label id="budget-label" for="budget">Maximum Budget: </label>
-                    <span>${pay}</span>
+                    <span id="pay">${pay}</span>
                 </div>
                 <div class="form-section">
                     <label id="contact-label" for="contact">Contact Info</label><br>
