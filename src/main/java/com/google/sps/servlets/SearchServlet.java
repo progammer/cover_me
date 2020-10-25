@@ -5,6 +5,8 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
+import com.google.cloud.datastore.StructuredQuery.CompositeFilter;
+import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +39,10 @@ public class SearchServlet extends HttpServlet {
 
     public int compareTo(Post other) {
       return Double.compare(distance, other.distance);
+    }
+
+    public String toString() {
+      return title + " " + description + " " + lat + " " + lng + " " + price + " " + distance;
     }
   }
 
@@ -72,25 +78,25 @@ public class SearchServlet extends HttpServlet {
 
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
-    Query<Entity> all = Query.newEntityQueryBuilder().setKind("Post").build();
-    QueryResults<Entity> all_posts = datastore.run(all);
-    while (all_posts.hasNext()) {
-      datastore.delete(all_posts.next().getKey());
-    }
+    // Query<Entity> all = Query.newEntityQueryBuilder().setKind("Post").build();
+    // QueryResults<Entity> all_posts = datastore.run(all);
+    // while (all_posts.hasNext()) {
+    //   datastore.delete(all_posts.next().getKey());
+    // }
 
     Query<Entity> query =
         Query.newEntityQueryBuilder()
             .setKind("Post")
-            /* .setFilter(
-            CompositeFilter.and(
-                PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower))) */
+            .setFilter(
+                CompositeFilter.and(
+                    PropertyFilter.le("lng", lngUpper), PropertyFilter.ge("lng", lngLower)))
             .build();
 
     QueryResults<Entity> user_posts = datastore.run(query);
 
     ArrayList<Post> postsIncreasingDistance = new ArrayList<>();
     while (user_posts.hasNext()) {
-      System.out.println("in");
+    //   System.out.println("in");
       Entity temp_post = user_posts.next();
       double otherLat;
       try {
@@ -121,7 +127,6 @@ public class SearchServlet extends HttpServlet {
         //   }
         //  }
         String title = temp_post.getString("title");
-        System.out.println(title);
         String description = temp_post.getString("description");
         double price;
         try {
@@ -136,7 +141,7 @@ public class SearchServlet extends HttpServlet {
     }
 
     Collections.sort(postsIncreasingDistance);
-    System.out.println(postsIncreasingDistance);
+    // System.out.println(postsIncreasingDistance);
     Gson gson = new Gson();
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(postsIncreasingDistance));
