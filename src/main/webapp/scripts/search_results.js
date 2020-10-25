@@ -57,10 +57,13 @@ function getMyPosts() {
 function initView() {
     let location = document.getElementById('job-address').innerText;
     let title = document.getElementById('job-name').innerText;
-    let budget = document.getElementById('budget-value').innerText.replace("\$", "");
+
+    let budget = document.getElementById('pay').innerText.replace("\$", "");
 
     let geo_loc = displayMap(location.split(' ').join('+'));
-    addMarker(geo_loc, title, budget);
+    addMarker(geo_loc, title, budget, true);
+
+    document.getElementById('pay').innerText = '$' + budget;
 
 }
 
@@ -143,8 +146,6 @@ function addPostingsFromSearch() {
     fetch_json.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
 
     for (posting of fetch_json) {
-
-        
         let corr_mark = addMarker(posting.location, posting.title, posting.pay);
         createPosting(posting, postings, display_search, corr_mark);
     }
@@ -196,28 +197,39 @@ function createPosting(posting, postingsList, option, corr_mark) {
         else
             post_dist.innerText = 'Remote job';
         post_price.innerText = price;
+        post_price.onclick = function() {
+            window.location.href = '/show?id=' + posting.id;
+        };
         
     } else if (option == display_mine) {
         post_dist.innerText = price;
         post_price.innerText = 'Remove Listing';
         post_price.onclick = function() {
             // remove listing
+            fetch('/delete?id=' + posting.id).then(window.location.href = 'my.html');
         };
     }
+
+    console.log("id: " + posting.id);
 
     post_div.appendChild(post_details);
     post_div.appendChild(post_dist);
     post_div.appendChild(post_price);
 
-    post_div.onclick = function() {
-        // fetch('/show?id=' + posting.id);
-        console.log(posting.id);
+    post_dist.onclick = function() {
+        window.location.href = '/show?id=' + posting.id;
+    };
+    post_details.onclick = function() {
         window.location.href = '/show?id=' + posting.id;
     };
     postingsList.appendChild(post_div);
 }
 
-function addMarker(location, title, pay) {
+function addMarker(location, title, pay, is_single) {
+    let mouse_shape = "pointer";
+    if (is_single) {
+        mouse_shape = "default";
+    }
 
     let marker = new google.maps.Marker({
         position: location,
@@ -236,12 +248,15 @@ function addMarker(location, title, pay) {
             fontWeight: 'bold',
             fontSize: '14px',
             text: "$" + parseInt(pay)
-        }
+        },
+        cursor: mouse_shape
     });
 
     marker.addListener("mouseover", mouseover_marker);
     marker.addListener("mouseout", mouseout_marker);
-    marker.addListener("click", markerClick);
+    if (!is_single) {
+        marker.addListener("click", markerClick);
+    }
 
     return marker;
 }

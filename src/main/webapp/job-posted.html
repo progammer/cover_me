@@ -32,7 +32,8 @@
 
     function main() {
 
-        let search_param = window.location.search.split("&");
+        console.log(decode(window.location.search));
+        let search_param = decode(window.location.search).split("&");
         
         const params = new URLSearchParams();
         params.append("title", search_param[0].split("=")[1].split("+").join(" "));
@@ -66,6 +67,19 @@
                 message.innerHTML = "Congrats! We will notify you when someone takes your job";
                 post_again.innerHTML = "Post another job";
         });
+    }
+
+    function decode(str) {
+        
+        str = str.split("+").join(" ");
+        str = str.split("%2C").join(",");
+        str = str.split("%40").join("@");
+        str = str.split("%23").join("#");
+        str = str.split("%24").join("$");
+        str = str.split("%26").join("&");
+        str = str.split("%3B").join(";");
+        str = str.split("%2F").join("/");
+        return str;
     }
 
     main();

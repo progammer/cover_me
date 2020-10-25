@@ -3,7 +3,8 @@
         <meta charset="UTF-8">
         <title>coverme</title>
         <link id="style" rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/header.css">
+        <link rel="stylesheet" href="../styles/header.css">        
+        <link rel="stylesheet" href="../styles/view_job.css">
         <link rel="stylesheet" href="../styles/job_post.css">
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <script
@@ -13,9 +14,9 @@
         <script src="../scripts/script.js"></script>
         <script src="../scripts/search_results.js"></script>
     </head>
-    <body onload="checkLogin(initView)">
+    <body onload="checkLogin()">
         <div id="header">
-            <div id="logo"><div>coverme♥️</div></div>
+            <div id="logo" onclick="window.location.href='index.html';"><div>coverme&#9829;</div></div>
             <div id="search-bar">
                 <input type="text" class="search-bar left" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" placeholder="Location">
@@ -36,7 +37,7 @@
                 </div>
                 <div class="form-section">
                     <label id="budget-label" for="budget">Maximum Budget: </label>
-                    <span>${pay}</span>
+                    <span id="pay">${pay}</span>
                 </div>
                 <div class="form-section">
                     <label id="contact-label" for="contact">Contact Info</label><br>
