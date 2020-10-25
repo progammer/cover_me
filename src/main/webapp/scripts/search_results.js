@@ -58,10 +58,12 @@ function initView() {
     let location = document.getElementById('job-address').innerText;
     let title = document.getElementById('job-name').innerText;
 
-    let budget = document.getElementById('budget-value').innerText.replace("\$", "");
+    let budget = document.getElementById('pay').innerText.replace("\$", "");
 
     let geo_loc = displayMap(location.split(' ').join('+'));
     addMarker(geo_loc, title, budget);
+
+    document.getElementById('pay').innerText = '$' + budget;
 
 }
 
