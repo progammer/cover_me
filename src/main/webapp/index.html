@@ -29,15 +29,88 @@
     <a href="search_results.html">go to search_results.html</a><br>
     <a href="posting.html">go to posting.html</a><br>
     <a href="view_job.html">go to view_job.html</a><br>
+
+
     <button id="submit">button</button>
+    <button id="submit" input=button>Go to results page</button> 
+    <button id="login" input=button>Login?</button>
+    <button id="create-account" input=button>Create Account</button>
+    <button id="create-post" input=button>Create Post</button>
+    <button id="search-db" input=button>Search DB</button> 
   </body>
 </html>
 <script>
+var last_id = null;
 
+document.getElementById("login")
+        .addEventListener("click", function(event) {
+    fetch('/login').then((response) => response.text())
+      .then(function(responseText) {
+            console.log(responseText);
+            let new_div = document.createElement("div");
+            new_div.innerHTML = responseText;
+            document.body.appendChild(new_div);
+      });
+});
 
 document.getElementById("submit")
         .addEventListener("click", function(event) {
     window.location.replace("./search_results.html?q=hack+man&location=Austin+Texas&r=default");
+});
+
+document.getElementById("search-db")
+        .addEventListener("click", function(event) {
+    const params = new URLSearchParams();
+    params.append("keywords", ["key1", "key2"]);
+    params.append("lat", 218.1291284);
+    params.append("lng", -124.12958125);
+    params.append("radius", "12452362");
+    fetch(new Request('/search', {method: 'POST', body: params})).then((response) => response.text())
+        .then(function(responseText) {
+        console.log(responseText);
+    });
+});
+
+document.getElementById("create-account")
+        .addEventListener("click", function(event) {
+    const params = new URLSearchParams();
+    params.append("username", "test");
+    params.append("password", "lololol");
+    params.append("email", "ethanlm.lao@gmail.com");
+    params.append("phone", "12452362");
+    fetch(new Request('/create_account', {method: 'POST', body: params})).then((response) => response.text())
+        .then(function(responseText) {
+        console.log(responseText);
+        last_id = responseText;
+    });
+});
+
+document.getElementById("create-post")
+        .addEventListener("click", function(event) {
+    if (last_id === null) {
+        const params = new URLSearchParams();
+        params.append("username", "test");
+        params.append("password", "lololol");
+        params.append("email", "ethanlm.lao@gmail.com");
+        params.append("phone", "12452362");
+        fetch(new Request('/create_account', {method: 'POST', body: params})).then((response) => response.text())
+            .then(function(responseText) {
+            console.log(responseText);
+        });
+    }
+
+    const params2 = new URLSearchParams();
+    params2.append("user_id", last_id);
+    params2.append("title", "Job title");
+    params2.append("description", "Job description");
+    params2.append("lat", 215.1291284);
+    params2.append("lng", -125.12958125);
+    params2.append("address", "1242 Hello Dr, Austin TX, 78750");
+    params2.append("pay", 15.63);
+    fetch(new Request('/create_post', {method: 'POST', body: params2})).then((response) => response.text())
+        .then(function(responseText) {
+        console.log(responseText);
+    });
 });
 
 </script>
