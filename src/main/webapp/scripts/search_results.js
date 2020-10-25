@@ -226,7 +226,7 @@ function addMarker(location, title, pay, is_single) {
             color: 'black',
             fontWeight: 'bold',
             fontSize: '14px',
-            text: "$" + parseInt(pay)
+            text: "$" + parseInt(pay.toString().split("\.")[0])
         },
         zIndex: 1,
         cursor: mouse_shape
