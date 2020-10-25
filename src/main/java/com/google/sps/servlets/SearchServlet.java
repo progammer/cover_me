@@ -74,6 +74,12 @@ public class SearchServlet extends HttpServlet {
 
     Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
+    Query<Entity> all = Query.newEntityQueryBuilder().setKind("Post").build();
+    QueryResults<Entity> all_posts = datastore.run(all);
+    while (all_posts.hasNext()) {
+      datastore.delete(all_posts.next().getKey());
+    }
+
     Query<Entity> query =
         Query.newEntityQueryBuilder()
             .setKind("Post")

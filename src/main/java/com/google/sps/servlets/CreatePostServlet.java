@@ -49,7 +49,7 @@ public class CreatePostServlet extends HttpServlet {
             .set("category", category)
             .set("address", address)
             .set("lat", lat)
-            .set("lng", lng)
+            .set("lng", Double.parseDouble(lng))
             .set("pay", pay)
             .set("email", email)
             .set("phone", phone)
