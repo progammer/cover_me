@@ -11,7 +11,7 @@
     <body>
         <!-- header -->
         <div id="header">
-            <div id="logo"><div>coverme♥️</div></div>
+            <div id="logo" onclick="home()"><div>coverme♥️</div></div>
             <div id="search-bar">
                 <input type="text" class="search-bar left" placeholder="find a job to cover...">
                 <input type="text" class="search-bar right" placeholder="Location">
@@ -24,7 +24,7 @@
                 <p>Looking for some help?</p>
                 <p>Post a job!</p>
             </div>
-            <form id="add-job-form" class="main-column job-post" action="/job-posted.html">
+            <form id="add-job-form" class="main-column job-post" action="/create_post">
                 <input type="text" id="job-name" name="title" placeholder="Job title" required>
                 <textarea name="job-desc" id="job-desc" rows="6" wrap="soft" 
                     placeholder="Please describe the job you are looking for, as well as any requirements necessary to take on the job."></textarea>
