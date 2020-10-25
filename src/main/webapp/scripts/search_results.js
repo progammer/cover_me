@@ -43,6 +43,15 @@ function initMy() {
     displayMyPostings();
 }
 
+function initView() {
+    let location = document.getElementById('job-address').innerText;
+    let title = document.getElementById('job-name').innerText;
+
+    let geo_loc = displayMap(location.split(' ').join('+'));
+    addMarker(geo_loc, title);
+
+}
+
 function displayMap(location) {
     var loc_json = JSON.parse(Get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + api_key));
     var geo_loc = loc_json.results[0].geometry.location;
@@ -55,7 +64,7 @@ function displayMap(location) {
             mapTypeIds: ["roadmap", "satellite"]
         },
     });
-
+    return geo_loc;
 }
 
 //GET PARAMS WITH FETCH, temp json:
@@ -109,18 +118,7 @@ function displayMyPostings() {
         console.log(posting);
 
         createPosting(posting, postings, display_mine)
-
-        //draw onto the map
-        let marker = new google.maps.Marker({
-            position: posting.location,
-            map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            title: posting.title,
-        });
-
-        console.log(marker);
-        marker.addListener("click", markerClick);
+        addMarker(posting.location, posting.title);
     }
 }
 
@@ -141,17 +139,7 @@ function addPostingsFromSearch() {
 
         createPosting(posting, postings, display_search);
 
-        //draw onto the map
-        let marker = new google.maps.Marker({
-            position: posting.location,
-            map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            title: posting.title,
-        });
-
-        console.log(marker);
-        marker.addListener("click", markerClick);
+        addMarker(posting.location, posting.title);
     }
 }
 
@@ -206,6 +194,19 @@ function createPosting(posting, postingsList, option) {
     postingsList.appendChild(post_div);
 }
 
+function addMarker(location, title) {
+    let marker = new google.maps.Marker({
+        position: location,
+        map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        title: title,
+    });
+
+    console.log(marker);
+    marker.addListener("click", markerClick);
+}
+
 function get_distance(loc1, loc2) {
     let lat1 = loc1.lat;
     let lng1 = loc1.lng;
@@ -233,7 +234,7 @@ function mouseout_post() {
 
 function Get(yourUrl){
     var Httpreq = new XMLHttpRequest(); // a new request
-    Httpreq.open("GET",yourUrl,false);
+    Httpreq.open("GET", yourUrl, false);
     Httpreq.send(null);
     return Httpreq.responseText;          
 }

@@ -1,8 +1,13 @@
 .main-row {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.main {
+    justify-content: space-around;
 }
 
 #add-form-title {
@@ -22,6 +27,16 @@
     flex-flow: column nowrap;
     justify-content: space-around;
     font-size: 1.1em;
+}
+
+.view-post {
+    height: 80%;
+    width: 30%;
+}
+
+#map {
+    min-width: 45%;
+    justify-self: flex-end;
 }
 
 .job-post input, .job-post textarea, .job-post select, .job-post select option {
