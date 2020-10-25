@@ -3,6 +3,7 @@ let api_key = "AIzaSyCOMxTQ8uWeUUxYOaciOHRwEsaWCA0eQeQ";
 let map;
 let s_keywords, s_location, s_radius;
 let s_latlng;
+var markers = [];
 
 function initSearch() {
     //First get search attributes
@@ -35,7 +36,6 @@ function initMy() {
     postings.textContent = '';
     postings.appendChild(search_header);
 
-    displayMap(location);
     getMyPosts();
 }
 
@@ -82,48 +82,6 @@ function displayMap(location) {
     return geo_loc;
 }
 
-//GET PARAMS WITH FETCH, temp json:
-let fetch_json = 
-        [
-            {
-                "title": "Help Me Hack! 1",
-                "description": "Please someone come help me",
-                "lat": 30.27235125, "lng": -97.7150332,
-                "location": {"lat": 30.27235125, "lng": -97.7150332},
-                "pay": 10,
-                "author": "Ethan Lao"
-            },
-            {
-                "title": "Help Me Hack! 2",
-                "description": "Please someone come help me",
-                "location": {"lat": 30.2439245, "lng": -97.7412125},
-                "pay": 40,
-                "author": "Caleb Park"
-            },
-            {
-                "title": "Help Me Hack! 3",
-                "description": "Please someone come help me",
-                "location": {"lat": 30.26232355, "lng": -97.723523},
-                "pay": 45,
-                "author": "Helen Fang"
-            },
-            {
-                "title": "Help Me Hack! 4",
-                "description": "Please someone come help me",
-                "location": {"lat": 30.245126, "lng": -97.73125241},
-                "pay": 59.50,
-                "author": "Edward Zhou"
-            },
-            {
-                "title": "Help Me Hack! 5",
-                "description": "Please someone come help me",
-                "location": {"lat": 30.2825125, "lng": -97.75125152},
-                "pay": 51.25,
-                "author": "Ethan Lao"
-            },
-        ];
-
-
 /* display options for individual postings */
 const display_search = 0;
 const display_mine = 1;
@@ -131,10 +89,15 @@ const display_mine = 1;
 function displayMyPostings(fetch_json) {
     var postings = document.getElementById("postings");
 
+    if (postings.length !== 0) {
+        displayMap("Austin, TX");
+    }
+
     for (posting of fetch_json) {
         let corr_mark = addMarker(posting.location, posting.title, posting.pay);
         createPosting(posting, postings, display_mine, corr_mark)
     }
+    zoom_to_fit_bounds();
 }
 
 function addPostingsFromSearch() {
@@ -161,6 +124,7 @@ function addPostingsFromSearch() {
                 let corr_mark = addMarker(posting.location, posting.title, posting.pay);
                 createPosting(posting, postings, display_search, corr_mark);
             }
+            zoom_to_fit_bounds();
     });
 
     
@@ -274,7 +238,18 @@ function addMarker(location, title, pay, is_single) {
         marker.addListener("click", markerClick);
     }
 
+    markers.push(marker);
+
     return marker;
+}
+
+function zoom_to_fit_bounds() {
+    let bounds = new google.maps.LatLngBounds();
+    for (let i = 0; i < markers.length; i++) {
+        bounds.extend(markers[i].getPosition());
+    }
+
+    map.fitBounds(bounds);
 }
 
 function get_distance(loc1, loc2) {
