@@ -10,31 +10,37 @@
     background-color: #93c47dff;
     height: calc(80% - 125px);
     margin: 0;
-    padding: 0;
+    padding: 0 calc(50% - 500px);
     display: flex;
     flex-flow: column nowrap;
+    width: 1000px;
 }
 
 #logo {
-    font-size: 2.5em;
+    font-size: 4.5em;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: absolute;
-    height: 100%;
-    width: 275px;
+    height: 35%;
+    width: 40%;
     cursor: pointer;
+    position: relative;
+}
+
+#tagline {
+    text-align: right;
+    font-size: 1.5em;
 }
 
 #search-bar {
     background-color: white;
     border-radius: 50px;
-    height: 100px;
+    height: 80px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     width: 1000px;
     left: calc(50% - 500px);
+    position: static;
 }
 
 .search-bar {
@@ -51,7 +57,7 @@
 
 .search-bar.right {
     padding-left: 2%;
-    border-left: 2px #999999 solid;
+    border-left: 3px #999999 solid;
     width: 30%;
 }
 

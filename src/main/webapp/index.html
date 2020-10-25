@@ -7,15 +7,9 @@
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/landing.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="dependencies/bootstrap.min.css">
-    <link rel="stylesheet" href="dependencies/mdb.min.css">
-    <script type="text/javascript" src="dependencies/jquery.min.js"></script>
-    <script type="text/javascript" src="dependencies/popper.min.js"></script>
-    <script type="text/javascript" src="dependencies/bootstrap.min.js"></script>
-    <script type="text/javascript" src="dependencies/mdb.min.js"></script>
     <script src="scripts/script.js"></script>
   </head>
-  <body>
+  <body onload="checkLogin()">
     <div id="header">
         <div id="user-info">
             <div>Loading...</div>
@@ -35,14 +29,7 @@
     </div>
     
 
-
-    <!-- Search form -->
-    <form id="search" style="font-family: 'Quicksand'" class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
-    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="need something covered?">
-    <i class="fas fa-search"></i>
-    </form>
-
-    <a href="my.html">go to my.html</a><br>
+    <!-- <a href="my.html">go to my.html</a><br>
     <a href="search_results.html">go to search_results.html</a><br>
     <a href="posting.html">go to posting.html</a><br>
 
@@ -52,7 +39,7 @@
     <button id="login" input=button>Login?</button>
     <button id="create-account" input=button>Create Account</button>
     <button id="create-post" input=button>Create Post</button>
-    <button id="search-db" input=button>Search DB</button> 
+    <button id="search-db" input=button>Search DB</button>  -->
   </body>
 </html>
 <script>
