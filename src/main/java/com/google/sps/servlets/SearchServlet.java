@@ -40,7 +40,7 @@ public class SearchServlet extends HttpServlet {
     }
 
     public String toString() {
-      return title + " " + description + " " + lat + " " + lng + " " + price + " " + distance;
+      return title + " " + description + " " + location.lat + " " + location.lng + " " + pay + " " + distance;
     }
   }
 
