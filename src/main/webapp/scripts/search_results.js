@@ -49,7 +49,7 @@ function initView() {
 
     let geo_loc = displayMap(location.split(' ').join('+'));
 
-    addMarker(geo_loc, title, 0);
+    addMarker(geo_loc, title, null);
 
 }
 
@@ -118,8 +118,9 @@ function displayMyPostings(fetch_json) {
 
     for (posting of fetch_json) {
 
-        createPosting(posting, postings, display_mine)
-        // addMarker(posting.location, posting.title, posting.pay);
+
+        let corr_mark = addMarker(posting.location, posting.title, posting.pay);
+        createPosting(posting, postings, display_mine, corr_mark)
     }
 }
 
@@ -134,19 +135,22 @@ function addPostingsFromSearch() {
 
     for (posting of fetch_json) {
 
-        createPosting(posting, postings, display_search);
-
-        addMarker(posting.location, posting.title, posting.pay);
+        
+        let corr_mark = addMarker(posting.location, posting.title, posting.pay);
+        createPosting(posting, postings, display_search, corr_mark);
     }
 }
 
 // creates a posting item from JSON and adds it to posting list
-function createPosting(posting, postingsList, option) {
+function createPosting(posting, postingsList, option, corr_mark) {
     let post_div = document.createElement("div");
     post_div.classList.add("posting");
 
+    d3.select(post_div).data([corr_mark])
+
     post_div.addEventListener("mouseover", mouseover_post);
     post_div.addEventListener("mouseout", mouseout_post);
+    post_div.addEventListener("click", click_post);
 
     /* create box w/ title and description */
     let post_title = document.createElement('div');
@@ -202,12 +206,13 @@ function createPosting(posting, postingsList, option) {
 }
 
 function addMarker(location, title, pay) {
+
     let marker = new google.maps.Marker({
         position: location,
         map,
         title: title,
         icon: {
-            path: google.maps.SymbolPath.CIRCLE,
+            path: 0,
             fillColor: "white",
             fillOpacity: 1,
             scale: 18,
@@ -222,8 +227,8 @@ function addMarker(location, title, pay) {
         }
     });
 
-
-    console.log(marker);
+    marker.addListener("mouseover", mouseover_marker);
+    marker.addListener("mouseout", mouseout_marker);
     marker.addListener("click", markerClick);
 
     return marker;
@@ -254,19 +259,55 @@ function deg2rad(deg) {
 }
 
 function markerClick() {
-  if (this.getAnimation() !== null) {
-    this.setAnimation(null);
-  } else {
-    this.setAnimation(google.maps.Animation.BOUNCE);
-  }
+    goto_job_post();
 }
 
 function mouseover_post() {
-    console.log("mouseover");
+    let marker = d3.select(this).data()[0];
+    let new_icon = marker.getIcon();
+    new_icon.fillColor = "black";
+    marker.setIcon(new_icon);
+
+    let new_label = marker.getLabel();
+    new_label.color = "white";
+    marker.setLabel(new_label);
 }
 
 function mouseout_post() {
-    console.log('mouseout');
+    let marker = d3.select(this).data()[0];
+    let new_icon = marker.getIcon();
+    new_icon.fillColor = "white";
+    marker.setIcon(new_icon);
+
+    let new_label = marker.getLabel();
+    new_label.color = "black";
+    marker.setLabel(new_label);
+}
+
+function click_post() {
+    goto_job_post();
+}
+
+function mouseover_marker() {
+    let marker = this;
+    let new_icon = marker.getIcon();
+    new_icon.fillColor = "black";
+    marker.setIcon(new_icon);
+
+    let new_label = marker.getLabel();
+    new_label.color = "white";
+    marker.setLabel(new_label);
+}
+
+function mouseout_marker() {
+    let marker = this;
+    let new_icon = marker.getIcon();
+    new_icon.fillColor = "white";
+    marker.setIcon(new_icon);
+
+    let new_label = marker.getLabel();
+    new_label.color = "black";
+    marker.setLabel(new_label);
 }
 
 function Get(yourUrl){
@@ -274,5 +315,9 @@ function Get(yourUrl){
     Httpreq.open("GET", yourUrl, false);
     Httpreq.send(null);
     return Httpreq.responseText;          
+}
+
+function goto_job_post() {
+
 }
 
