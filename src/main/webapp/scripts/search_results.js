@@ -48,7 +48,7 @@ function initView() {
     let title = document.getElementById('job-name').innerText;
 
     let geo_loc = displayMap(location.split(' ').join('+'));
-    addMarker(geo_loc, title);
+    addMarker(geo_loc, title, 0);
 
 }
 
@@ -74,34 +74,35 @@ let fetch_json =
                 "title": "Help Me Hack! 1",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.27235125, "lng": -97.7150332},
-                "price": [10, 20],
+                "pay": 10,
                 "author": "Ethan Lao"
             },
             {
                 "title": "Help Me Hack! 2",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.2439245, "lng": -97.7412125},
-                "price": [10, 20],
+                "pay": 40,
                 "author": "Caleb Park"
             },
             {
                 "title": "Help Me Hack! 3",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.26232355, "lng": -97.723523},
-                "price": [10, 20],
+                "pay": 45,
                 "author": "Helen Fang"
             },
             {
                 "title": "Help Me Hack! 4",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.245126, "lng": -97.73125241},
-                "price": [10, 20],
+                "pay": 59.50,
                 "author": "Edward Zhou"
             },
             {
                 "title": "Help Me Hack! 5",
                 "description": "Please someone come help me",
                 "location": {"lat": 30.2825125, "lng": -97.75125152},
+                "pay": 51.25,
                 "author": "Ethan Lao"
             },
         ];
@@ -118,17 +119,14 @@ function displayMyPostings(fetch_json) {
         console.log(posting);
 
         createPosting(posting, postings, display_mine)
-        addMarker(posting.location, posting.title);
+        addMarker(posting.location, posting.title, posting.pay);
     }
 }
 
 function addPostingsFromSearch() {
     var postings = document.getElementById("postings");
-    var count = 1;
     for (posting of fetch_json) {
-        // posting.distance = get_distance(s_latlng, posting.location);
-        posting.distance = count;
-        count ++;
+        posting.distance = get_distance(s_latlng, posting.location);
     }
 
     // sort in order of distance
@@ -139,7 +137,7 @@ function addPostingsFromSearch() {
 
         createPosting(posting, postings, display_search);
 
-        addMarker(posting.location, posting.title);
+        addMarker(posting.location, posting.title, posting.pay);
     }
 }
 
@@ -169,14 +167,14 @@ function createPosting(posting, postingsList, option) {
     post_price.classList.add('posting-price');
 
     let price = 'Negotiable';
-    if (posting.price != null) {
-        price = '$' + posting.price[0] + ' - ' + '$' + posting.price[1];
+    if (posting.pay != null) {
+        price = '$' + posting.pay;
     }
     
     if(option == display_search) {
         // display distance and then price
         if (posting.distance)
-            post_dist.innerText = posting.distance + ' miles away';
+            post_dist.innerText = posting.distance + ' mi';
         else
             post_dist.innerText = 'Remote job';
         post_price.innerText = price;
@@ -194,26 +192,56 @@ function createPosting(posting, postingsList, option) {
     postingsList.appendChild(post_div);
 }
 
-function addMarker(location, title) {
+function addMarker(location, title, pay) {
     let marker = new google.maps.Marker({
         position: location,
         map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
         title: title,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: "white",
+            fillOpacity: 1,
+            scale: 18,
+            strokeWeight: .5,
+            strokeColor: "lightgray",
+        },
+        label: {
+            color: 'black',
+            fontWeight: 'bold',
+            fontSize: '14px',
+            text: "$" + parseInt(pay)
+        }
     });
+
 
     console.log(marker);
     marker.addListener("click", markerClick);
+
+    return marker;
 }
 
 function get_distance(loc1, loc2) {
     let lat1 = loc1.lat;
-    let lng1 = loc1.lng;
+    let lon1 = loc1.lng;
     let lat2 = loc2.lat;
-    let lng2 = loc2.lng;
+    let lon2 = loc2.lng;
+  
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
     
-    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow (lng1 - lng2, 2));
+    return Math.round(d * 1.60934 * 100) / 100; //distance in mi
+}
+
+function deg2rad(deg) {
+    return deg * (Math.PI/180)
 }
 
 function markerClick() {

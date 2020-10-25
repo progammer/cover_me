@@ -17,6 +17,7 @@ public class CreatePostServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     /* String user_id = request.getParameter("user_id"); */
+
     String title = request.getParameter("title");
     String description = request.getParameter("description");
     String category = request.getParameter("category");
@@ -38,7 +39,7 @@ public class CreatePostServlet extends HttpServlet {
 
     Entity posting =
         Entity.newBuilder(job_posting_key)
-            /* .set("user_id", user_id) */
+            .set("user_id", email)
             .set("title", title)
             .set("description", description)
             .set("category", category)
@@ -59,7 +60,13 @@ public class CreatePostServlet extends HttpServlet {
     System.out.println(retrieved.getString("description"));
     System.out.println(retrieved.getString("address"));
     System.out.println(retrieved.getDouble("lat"));
-    System.out.println(retrieved.getDouble("pay")); */
+    System.out.println(retrieved.getDouble("pay"));
+    System.out.println(job_posting_key);
+    System.out.println("-------------------");
+
+    long id = job_posting_key.getId();
+    Key test = keyFactory.newKey(id);
+    System.out.println(datastore.get(test)); */
 
     /* Query<Entity> query =
         Query.newEntityQueryBuilder()
@@ -71,15 +78,10 @@ public class CreatePostServlet extends HttpServlet {
     QueryResults<Entity> user_posts = datastore.run(query);
 
     while (user_posts.hasNext()) {
-      Entity temp_post = user_posts.next();
-      System.out.println("-------------------");
-      System.out.println(temp_post.getString("user_id"));
-      System.out.println(temp_post.getString("title"));
-      System.out.println(temp_post.getString("description"));
-      System.out.println(temp_post.getString("address"));
-      System.out.println(temp_post.getString("lat"));
-      System.out.println(temp_post.getString("lng"));
-      System.out.println(temp_post.getString("pay"));
+        Entity temp_post = user_posts.next();
+        System.out.println("-------------------");
+        System.out.println(temp_post.getString("user_id"));
+        System.out.println(temp_post.getString("title"));
     } */
 
     response.setContentType("html/text");
